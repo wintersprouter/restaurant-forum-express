@@ -1,17 +1,28 @@
-<h1>餐廳後台</h1>
-
+<div class="restaurants-title">
+  <h1>餐廳後台</h1><small>*依照最後更新時間做排序</small>
+</div>
+<br>
+<a href='/admin/restaurants'>
+  Restaurants
+</a> |
+<a href='/admin/users'>
+  Users
+</a>
+<br>
+<br>
 <a href='/admin/restaurants/create'>
   <button type="button" class="btn btn-primary">New Restaurant</button>
 </a>
 
-<br />
-<br />
+<br>
+<br>
 
 <table class="table">
   <thead class="thead-dark">
     <tr>
       <th scope="col">#</th>
       <th scope="col">Name</th>
+      <th scope="col">UpdatedAt</th>
       <th scope="col">#</th>
     </tr>
   </thead>
@@ -20,6 +31,7 @@
     <tr>
       <th scope="row">{{this.id}}</th>
       <td>{{this.name}}</td>
+      <th scope="row">{{this.updatedAt}}</th>
       <td>
         <button type="button" class="btn btn-link">
           <a href="/admin/restaurants/{{this.id}}">
@@ -35,6 +47,7 @@
           <button type="submit" class="btn btn-link">Delete</button>
         </form>
       </td>
+
     </tr>
     {{/each}}
   </tbody>

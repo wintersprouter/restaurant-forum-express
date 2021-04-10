@@ -1,5 +1,6 @@
 const db = require('../models') 
 const Restaurant = db.Restaurant
+const User = db.User
 const Category = db.Category
 const fs = require('fs')
 const imgur = require('imgur-node-api')
@@ -10,7 +11,8 @@ const adminController = {
     return Restaurant.findAll({
       raw: true,
       nest: true, 
-      include: [Category]
+      include: [Category],
+      order: [['updatedAt', 'DESC']]
     }).then(restaurants => {
       return res.render('admin/restaurants', {restaurants: restaurants })
     })
@@ -111,7 +113,8 @@ const adminController = {
             opening_hours: req.body.opening_hours,
             description: req.body.description,
             image: file ? img.data.link : restaurant.image,
-            CategoryId: req.body.categoryId
+            CategoryId: req.body.categoryId,
+            updatedAt: new Date()
           })
           .then((restaurant) => {
             req.flash('success_messages', 'restaurant was successfully to update')
@@ -130,21 +133,50 @@ const adminController = {
           opening_hours: req.body.opening_hours,
           description: req.body.description,
           image: restaurant.image,
-          CategoryId: req.body.categoryId
+          CategoryId: req.body.categoryId,
+          updatedAt: new Date()
         })
         .then((restaurant) => {
           req.flash('success_messages', 'restaurant was successfully to update')
           res.redirect('/admin/restaurants')
         })
       })
-  }
-},
+    }
+  },
   deleteRestaurant: (req, res) => {
     return Restaurant.findByPk(req.params.id)
     .then((restaurant) => {
       restaurant.destroy()
       .then((restaurant) => {
         res.redirect('/admin/restaurants')
+      })
+    })
+  },
+  getUsers: (req, res) => {
+    return User.findAll({
+      raw: true,
+      nest: true, 
+      order: [['updatedAt', 'DESC']]
+    }).then( users => {
+      return res.render('admin/users', {
+        users: users 
+      })
+    })
+    .catch(() => { res.sendStatus(404) })
+  },
+  toggleAdmin: (req,res) => {
+    return User.findByPk(req.params.id)
+    .then((user)=>{
+      return user.update({ 
+          updatedAt: new Date(),
+          isAdmin: user.isAdmin ? 0 : 1})
+      .then((user) => {
+        req.flash('success_messages', `${user.name}的權限已成功更新`)
+        return res.redirect('/admin/users')
+        })
+      .catch(() => { 
+        req.flash('error_messages', '權限更新失敗！') 
+        return res.redirect('/admin/users')
       })
     })
   }

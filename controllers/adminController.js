@@ -89,18 +89,19 @@ const adminController = {
     }
   },
 
-  editRestaurant: (req, res) => {
-    Category.findAll({
-      raw: true,
-      nest: true
-    }).then(categories => {
-      return Restaurant.findByPk(req.params.id).then(restaurant => {
-        return res.render('admin/create', {
-          categories: categories,
-          restaurant: restaurant.toJSON()
-        })
+  editRestaurant: async (req, res) => {
+    try {
+      const [categories, restaurant] = await Promise.all([
+        Category.findAll({ raw: true, nest: true }),
+        Restaurant.findByPk(req.params.id)
+      ])
+      return res.render('admin/create', {
+        categories: categories,
+        restaurant: restaurant.toJSON()
       })
-    })
+    } catch (err) {
+      console.log(err)
+    }
   },
 
   putRestaurant: (req, res) => {

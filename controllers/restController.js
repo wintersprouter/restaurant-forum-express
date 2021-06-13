@@ -1,28 +1,28 @@
 const db = require('../models')
-const Restaurant = db.Restaurant
-const Category = db.Category
-const Comment = db.Comment
-const User = db.User
+const { Restaurant, Category, Comment, User } = db
 const pageLimit = 10 // 每頁筆數
 
 const restController = {
-  getRestaurants: (req, res) => {
-    let offset = 0
-    const whereQuery = {}
-    let categoryId = ''
-    if (req.query.page) {
-      offset = (req.query.page - 1) * pageLimit
-    }
-    if (req.query.categoryId) {
-      categoryId = Number(req.query.categoryId)
-      whereQuery.CategoryId = categoryId
-    }
-    Restaurant.findAndCountAll({
-      include: Category,
-      where: whereQuery,
-      offset: offset,
-      limit: pageLimit
-    }).then(result => {
+  getRestaurants: async (req, res) => {
+    try {
+      let offset = 0
+      const whereQuery = {}
+      let categoryId = ''
+      if (req.query.page) {
+        offset = (req.query.page - 1) * pageLimit
+      }
+      if (req.query.categoryId) {
+        categoryId = Number(req.query.categoryId)
+        whereQuery.CategoryId = categoryId
+      }
+
+      const [result, categories] = await Promise.all([Restaurant.findAndCountAll({
+        include: Category,
+        where: whereQuery,
+        offset: offset,
+        limit: pageLimit
+      }), Category.findAll({ raw: true, nest: true })])
+      
       const page = Number(req.query.page) || 1 // 考慮無page參數的例外
       const pages = Math.ceil(result.count / pageLimit)// 總計幾頁分頁//(計算餐廳總數/每頁筆數)無條件進位
       const totalPage = Array.from({ length: pages }).map((item, index) => index + 1)// Array.from({length: pages})回傳長度符合的陣列[1,2,3,4,5...]//用 map 把真正的數字帶進去
@@ -35,21 +35,19 @@ const restController = {
         categoryName: r.dataValues.Category.name,
         isFavorited: req.user.FavoritedRestaurants.map(d => d.id).includes(r.id)
       }))
-      Category.findAll({
-        raw: true,
-        nest: true
-      }).then(categories => {
-        return res.render('restaurants', {
-          restaurants: data,
-          categories: categories,
-          categoryId: categoryId,
-          page: page,
-          totalPage: totalPage,
-          prev: prev,
-          next: next
-        })
+
+      res.render('restaurants', {
+        restaurants: data,
+        categories: categories,
+        categoryId: categoryId,
+        page: page,
+        totalPage: totalPage,
+        prev: prev,
+        next: next
       })
-    })
+    } catch (err) {
+      console.log(err)
+    }
   },
 
   getRestaurant: (req, res) => {

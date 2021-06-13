@@ -28,15 +28,15 @@
       <th scope="row">{{this.id}}</th>
       <td scope="row">{{this.name}}</td>
       <td scope="row">{{this.email}}</td>
-      <td scope="row">{{#if isAdmin}}
+      <td scope="row">{{#if this.isAdmin}}
         admin
         {{else}}
         user
         {{/if}}</td>
       <td>
         <form action="/admin/users/{{this.id}}/toggleAdmin?_method=PUT" method="POST" style="display: inline;">
-          <button type="submit" class="btn btn-link">
-            {{#if isAdmin}}set as user{{else}}set as admin{{/if}}</button>
+          <button type="submit" class="btn btn-link"{{#ifCond @root.user.id this.id}}disabled{{/ifCond}}>
+            {{#if this.isAdmin}}set as user{{else}}set as admin{{/if}}</button>
         </form>
       </td>
     </tr>

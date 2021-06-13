@@ -175,22 +175,19 @@ const adminController = {
       console.log(err)
     }
   },
-  toggleAdmin: (req, res) => {
-    return User.findByPk(req.params.id)
-      .then((user) => {
-        return user.update({
-          updatedAt: new Date(),
-          isAdmin: user.isAdmin ? 0 : 1
-        })
-          .then((user) => {
-            req.flash('success_messages', `${user.name}的權限已成功更新`)
-            return res.redirect('/admin/users')
-          })
-          .catch(() => {
-            req.flash('error_messages', '權限更新失敗！')
-            return res.redirect('/admin/users')
-          })
-      })
+  toggleAdmin: async (req, res) => {
+    try {
+      const user = await User.findByPk(req.params.id)
+      const adminId = helpers.getUser(req).id
+      if (adminId === user.id) {
+        return res.redirect('/admin/users')
+      }
+      await user.update({ updatedAt: new Date(), isAdmin: user.isAdmin ? 0 : 1 })
+      req.flash('success_messages', `${user.name}的權限已成功更新`)
+      res.redirect('/admin/users')
+    } catch (err) {
+      console.log(err)
+    }
   }
 }
 

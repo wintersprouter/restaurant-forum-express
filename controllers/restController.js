@@ -3,7 +3,7 @@ const Restaurant = db.Restaurant
 const Category = db.Category
 const Comment = db.Comment
 const User = db.User
-const pageLimit = 10 //每頁筆數
+const pageLimit = 10 // 每頁筆數
 
 const restController = {
   getRestaurants: (req, res) => {
@@ -17,15 +17,15 @@ const restController = {
       categoryId = Number(req.query.categoryId)
       whereQuery.CategoryId = categoryId
     }
-    Restaurant.findAndCountAll({ 
+    Restaurant.findAndCountAll({
       include: Category,
       where: whereQuery,
       offset: offset,
-      limit:pageLimit
+      limit: pageLimit
     }).then(result => {
-      const page = Number (req.query.page) || 1 //考慮無page參數的例外
-      const pages = Math.ceil(result.count / pageLimit)//總計幾頁分頁//(計算餐廳總數/每頁筆數)無條件進位 
-      const totalPage = Array.from({ length: pages }).map((item, index) => index + 1)//Array.from({length: pages})回傳長度符合的陣列[1,2,3,4,5...]//用 map 把真正的數字帶進去
+      const page = Number(req.query.page) || 1 // 考慮無page參數的例外
+      const pages = Math.ceil(result.count / pageLimit)// 總計幾頁分頁//(計算餐廳總數/每頁筆數)無條件進位
+      const totalPage = Array.from({ length: pages }).map((item, index) => index + 1)// Array.from({length: pages})回傳長度符合的陣列[1,2,3,4,5...]//用 map 把真正的數字帶進去
       const prev = page - 1 < 1 ? 1 : page - 1
       const next = page + 1 > pages ? pages : page + 1
 
@@ -42,18 +42,18 @@ const restController = {
         return res.render('restaurants', {
           restaurants: data,
           categories: categories,
-          categoryId:categoryId,
+          categoryId: categoryId,
           page: page,
           totalPage: totalPage,
-          prev:prev,
-          next:next
+          prev: prev,
+          next: next
         })
       })
     })
   },
 
   getRestaurant: (req, res) => {
-    return Restaurant.findByPk(req.params.id,{
+    return Restaurant.findByPk(req.params.id, {
       include: [
         Category,
         { model: User, as: 'FavoritedUsers' },
@@ -63,7 +63,7 @@ const restController = {
       const isFavorited = restaurant.FavoritedUsers.map(d => d.id).includes(req.user.id)
       return res.render('restaurant', {
         restaurant: restaurant.toJSON(),
-        isFavorited: isFavorited 
+        isFavorited: isFavorited
       })
     })
   },
@@ -90,6 +90,6 @@ const restController = {
       })
     })
   }
-}  
+}
 
 module.exports = restController

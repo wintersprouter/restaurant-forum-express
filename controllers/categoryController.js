@@ -1,6 +1,6 @@
 const db = require('../models')
 const Category = db.Category
-let categoryController = {
+const categoryController = {
   getCategories: (req, res) => {
     return Category.findAll({
       raw: true,
@@ -9,9 +9,9 @@ let categoryController = {
       if (req.params.id) {
         Category.findByPk(req.params.id)
           .then((category) => {
-            return res.render('admin/categories', { 
-              categories: categories, 
-              category: category.toJSON() 
+            return res.render('admin/categories', {
+              categories: categories,
+              category: category.toJSON()
             })
           })
       } else {
@@ -32,7 +32,7 @@ let categoryController = {
         })
     }
   },
-    putCategory: (req, res) => {
+  putCategory: (req, res) => {
     if (!req.body.name) {
       req.flash('error_messages', 'name didn\'t exist')
       return res.redirect('back')
@@ -54,6 +54,6 @@ let categoryController = {
             res.redirect('/admin/categories')
           })
       })
-  }  
+  }
 }
 module.exports = categoryController

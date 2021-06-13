@@ -1,5 +1,5 @@
 const restController = require('../controllers/restController.js')
-const adminController = require('../controllers/adminController.js') 
+const adminController = require('../controllers/adminController.js')
 const userController = require('../controllers/userController.js')
 const categoryController = require('../controllers/categoryController.js')
 const commentController = require('../controllers/commentController.js')
@@ -20,8 +20,8 @@ module.exports = (app, passport) => {
     }
     res.redirect('/signin')
   }
-  app.get('/',authenticated, (req, res) => res.redirect('/restaurants'))
-  app.get('/restaurants',authenticated, restController.getRestaurants)
+  app.get('/', authenticated, (req, res) => res.redirect('/restaurants'))
+  app.get('/restaurants', authenticated, restController.getRestaurants)
   app.get('/restaurants/feeds', authenticated, restController.getFeeds)
   app.get('/restaurants/:id', authenticated, restController.getRestaurant)
 
@@ -34,9 +34,9 @@ module.exports = (app, passport) => {
   app.delete('/favorite/:restaurantId', authenticated, userController.removeFavorite)
   app.post('/following/:userId', authenticated, userController.addFollowing)
   app.delete('/following/:userId', authenticated, userController.removeFollowing)
-  
-  app.get('/admin',authenticatedAdmin, (req, res) => res.redirect('/admin/restaurants'))
-  app.get('/admin/restaurants',authenticatedAdmin,adminController.getRestaurants)
+
+  app.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/restaurants'))
+  app.get('/admin/restaurants', authenticatedAdmin, adminController.getRestaurants)
   app.get('/admin/restaurants/create', authenticatedAdmin, adminController.createRestaurant)
   app.post('/admin/restaurants', authenticatedAdmin, upload.single('image'), adminController.postRestaurant)
   app.get('/admin/restaurants/:id', authenticatedAdmin, adminController.getRestaurant)
@@ -50,12 +50,11 @@ module.exports = (app, passport) => {
   app.put('/admin/categories/:id', authenticatedAdmin, categoryController.putCategory)
   app.delete('/admin/categories/:id', authenticatedAdmin, categoryController.deleteCategory)
 
-  app.get('/admin/users',authenticatedAdmin,adminController.getUsers)
-  app.put('/admin/users/:id/toggleAdmin',authenticatedAdmin,adminController.toggleAdmin)
-  
+  app.get('/admin/users', authenticatedAdmin, adminController.getUsers)
+  app.put('/admin/users/:id/toggleAdmin', authenticatedAdmin, adminController.toggleAdmin)
+
   app.get('/signup', userController.signUpPage)
   app.post('/signup', userController.signUp)
-
 
   app.get('/signin', userController.signInPage)
   app.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)

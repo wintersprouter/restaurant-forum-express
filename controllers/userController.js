@@ -1,4 +1,4 @@
-const bcrypt = require('bcryptjs') 
+const bcrypt = require('bcryptjs')
 const db = require('../models')
 const User = db.User
 const Favorite = db.Favorite
@@ -10,12 +10,12 @@ const userController = {
   },
 
   signUp: (req, res) => {
-    if(req.body.passwordCheck !== req.body.password){
+    if (req.body.passwordCheck !== req.body.password) {
       req.flash('error_messages', '兩次密碼輸入不同！')
       return res.redirect('/signup')
     } else {
-      User.findOne({where: {email: req.body.email}}).then(user => {
-        if(user){
+      User.findOne({ where: { email: req.body.email } }).then(user => {
+        if (user) {
           req.flash('error_messages', '信箱重複！')
           return res.redirect('/signup')
         } else {
@@ -26,9 +26,9 @@ const userController = {
           }).then(user => {
             req.flash('success_messages', '成功註冊帳號！')
             return res.redirect('/signin')
-          })  
+          })
         }
-      })    
+      })
     }
   },
   signInPage: (req, res) => {
@@ -93,25 +93,26 @@ const userController = {
       followerId: req.user.id,
       followingId: req.params.userId
     })
-  .then((followship) => {
-    return res.redirect('back')
-  })
-},
-
-removeFollowing: (req, res) => {
-  return Followship.findOne({where: {
-    followerId: req.user.id,
-    followingId: req.params.userId
-  }})
-    .then((followship) => {
-      followship.destroy()
       .then((followship) => {
         return res.redirect('back')
       })
-    })
-}
+  },
 
-  
+  removeFollowing: (req, res) => {
+    return Followship.findOne({
+      where: {
+        followerId: req.user.id,
+        followingId: req.params.userId
+      }
+    })
+      .then((followship) => {
+        followship.destroy()
+          .then((followship) => {
+            return res.redirect('back')
+          })
+      })
+  }
+
 }
 
 module.exports = userController

@@ -163,17 +163,17 @@ const adminController = {
       console.log(err)
     }
   },
-  getUsers: (req, res) => {
-    return User.findAll({
-      raw: true,
-      nest: true,
-      order: [['updatedAt', 'DESC']]
-    }).then(users => {
-      return res.render('admin/users', {
-        users: users
+  getUsers: async (req, res) => {
+    try {
+      const users = await User.findAll({
+        raw: true,
+        nest: true,
+        order: [['updatedAt', 'DESC']]
       })
-    })
-      .catch(() => { res.sendStatus(404) })
+      return res.render('admin/users', { users: users })
+    } catch (err) {
+      console.log(err)
+    }
   },
   toggleAdmin: (req, res) => {
     return User.findByPk(req.params.id)

@@ -22,7 +22,7 @@ const restController = {
         offset: offset,
         limit: pageLimit
       }), Category.findAll({ raw: true, nest: true })])
-      
+
       const page = Number(req.query.page) || 1 // 考慮無page參數的例外
       const pages = Math.ceil(result.count / pageLimit)// 總計幾頁分頁//(計算餐廳總數/每頁筆數)無條件進位
       const totalPage = Array.from({ length: pages }).map((item, index) => index + 1)// Array.from({length: pages})回傳長度符合的陣列[1,2,3,4,5...]//用 map 把真正的數字帶進去

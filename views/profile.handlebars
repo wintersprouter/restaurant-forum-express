@@ -1,0 +1,12 @@
+<section class="user-profile">
+  <div class="user-avatar"><img class="mt-2" {{#if userProfile.image}}src={{userProfile.image}}{{/if}}
+    style="background: #C4C4C4;  width: 150px; height: 150px">
+  <div class="user-info">
+    <h1 class="user-name">{{userProfile.name}}</h1>
+    <p class="email">{{userProfile.email}}</p>
+    {{#ifCond userId userProfile.id}}
+    <form action="/users/{{userProfile.id}}/edit" method="GET" style="display: contents;"><button type="submit"
+        class="btn btn-primary">Edit</button></form>
+    {{/ifCond}}
+  </div>
+</section>

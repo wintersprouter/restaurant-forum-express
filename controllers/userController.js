@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs')
 const db = require('../models')
-const { User, Favorite, Followship } = db
+const { User, Favorite, Followship, Restaurant, Comment } = db
 const helpers = require('../_helpers')
 
 const userController = {
@@ -72,6 +72,23 @@ const userController = {
       console.log(err)
     }
   },
+  getUser: async (req, res) => {
+    try {
+      const userProfile = (await User.findOne({
+        where: {
+          id: Number(req.params.id)
+        },
+        attributes: ['id', 'name', 'email', 'image']
+      })
+      ).toJSON()
+      return res.render('profile', {
+        userId: helpers.getUser(req).id,
+        userProfile
+      })
+    } catch (err) {
+      console.log(err)
+    }
+  },
   getTopUser: (req, res) => {
     // 撈出所有 User 與 followers 資料
     return User.findAll({
@@ -112,15 +129,12 @@ const userController = {
           followingId: req.params.userId
         }
       })
-
       followship.destroy()
-
       return res.redirect('back')
     } catch (err) {
       console.log(err)
     }
   }
-
 }
 
 module.exports = userController

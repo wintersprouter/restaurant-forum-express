@@ -30,6 +30,7 @@ module.exports = (app, passport) => {
   app.delete('/comments/:id', authenticatedAdmin, commentController.deleteComment)
 
   app.get('/users/top', authenticated, userController.getTopUser)
+  app.get('/users/:id', authenticated, userController.getUser)
 
   app.post('/favorite/:restaurantId', authenticated, userController.addFavorite)
   app.delete('/favorite/:restaurantId', authenticated, userController.removeFavorite)

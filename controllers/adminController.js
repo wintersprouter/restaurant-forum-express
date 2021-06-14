@@ -2,6 +2,7 @@ const db = require('../models')
 const { Restaurant, User, Category } = db
 const fs = require('fs')
 const imgur = require('imgur-node-api')
+const helpers = require('../_helpers')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
 const adminController = {

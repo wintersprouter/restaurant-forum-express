@@ -1,5 +1,6 @@
 const db = require('../models')
 const { Restaurant, Category, Comment, User } = db
+const helpers = require('../_helpers')
 const pageLimit = 10 // 每頁筆數
 
 const restController = {
@@ -33,7 +34,7 @@ const restController = {
         ...r.dataValues,
         description: r.dataValues.description.substring(0, 50),
         categoryName: r.dataValues.Category.name,
-        isFavorited: req.user.FavoritedRestaurants.map(d => d.id).includes(r.id)
+        isFavorited: helpers.getUser(req).FavoritedRestaurants.map(d => d.id).includes(r.id)
       }))
 
       res.render('restaurants', {
@@ -58,7 +59,7 @@ const restController = {
         { model: Comment, include: [User] }
       ]
     }).then(restaurant => {
-      const isFavorited = restaurant.FavoritedUsers.map(d => d.id).includes(req.user.id)
+      const isFavorited = restaurant.FavoritedUsers.map(d => d.id).includes(helpers.getUser(req).id)
       return res.render('restaurant', {
         restaurant: restaurant.toJSON(),
         isFavorited: isFavorited

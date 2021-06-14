@@ -7,7 +7,7 @@ const commentController = {
     return Comment.create({
       text: req.body.text,
       RestaurantId: req.body.restaurantId,
-      UserId:helpers.getUser(req).id
+      UserId: helpers.getUser(req).id
     })
       .then((comment) => {
         res.redirect(`/restaurants/${req.body.restaurantId}`)

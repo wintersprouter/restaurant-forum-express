@@ -1,6 +1,5 @@
 const db = require('../models')
 const { Restaurant, User, Category } = db
-const fs = require('fs')
 const imgur = require('imgur-node-api')
 const helpers = require('../_helpers')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
@@ -129,7 +128,6 @@ const adminController = {
               CategoryId: categoryId,
               updatedAt: new Date()
             })
-
             req.flash('success_messages', 'restaurant was successfully to update')
             res.redirect('/admin/restaurants')
           } catch (err) {

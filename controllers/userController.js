@@ -89,6 +89,23 @@ const userController = {
       console.log(err)
     }
   },
+  getEditUser: async (req, res) => {
+    try {
+      const userProfile = (await User.findOne({
+        where: {
+          id: Number(req.params.id)
+        },
+        attributes: ['id', 'name', 'email', 'image']
+      })
+      ).toJSON()
+      return res.render('editProfile', {
+        userId: helpers.getUser(req).id,
+        userProfile
+      })
+    } catch (err) {
+      console.log(err)
+    }
+  },
   getTopUser: (req, res) => {
     // 撈出所有 User 與 followers 資料
     return User.findAll({

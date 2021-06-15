@@ -1,7 +1,22 @@
 const bcrypt = require('bcryptjs')
 const db = require('../models')
 const { User, Favorite, Followship, Restaurant, Comment } = db
+
+const imgur = require('imgur-node-api')
+const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
+
 const helpers = require('../_helpers')
+
+const uploadImg = path => {
+  return new Promise((resolve, reject) => {
+    imgur.upload(path, (err, img) => {
+      if (err) {
+        return reject('error happened')
+      }
+      resolve(img)
+    })
+  })
+}
 
 const userController = {
   signUpPage: (req, res) => {
@@ -74,16 +89,14 @@ const userController = {
   },
   getUser: async (req, res) => {
     try {
-      const userProfile = (await User.findOne({
-        where: {
-          id: Number(req.params.id)
-        },
-        attributes: ['id', 'name', 'email', 'image']
-      })
-      ).toJSON()
+      const userId = helpers.getUser(req).id
+      const id = req.params.id
+      const userProfile = await User.findByPk(id)
+      const user = userProfile.toJSON()
+
       return res.render('profile', {
-        userId: helpers.getUser(req).id,
-        userProfile
+        userId,
+        user
       })
     } catch (err) {
       console.log(err)
@@ -91,17 +104,41 @@ const userController = {
   },
   getEditUser: async (req, res) => {
     try {
-      const userProfile = (await User.findOne({
-        where: {
-          id: Number(req.params.id)
-        },
-        attributes: ['id', 'name', 'email', 'image']
-      })
-      ).toJSON()
+      const userId = helpers.getUser(req).id
+      const userProfile = await User.findByPk(userId)
+      const user = userProfile.toJSON()
+      console.log(user)
       return res.render('editProfile', {
-        userId: helpers.getUser(req).id,
-        userProfile
+        userId,
+        user
       })
+    } catch (err) {
+      console.log(err)
+    }
+  },
+  putUser: async (req, res) => {
+    const { name } = req.body
+    const userId = helpers.getUser(req).id
+    const id = req.params.id
+    const { file } = req
+    let img
+
+    if (!name || name.length > 20) {
+      req.flash('error_messages', '使用者名稱不存在')
+      return res.redirect('back')
+    }
+    try {
+      if (file) {
+        imgur.setClientID(IMGUR_CLIENT_ID)
+        img = await uploadImg(file.path)
+      }
+      const user = await User.findByPk(userId)
+      await user.update({
+        name,
+        image: file ? img.data.link : user.image
+      })
+      req.flash('success_messages', '使用者簡介已更新！')
+      res.redirect(`/users/${userId}`)
     } catch (err) {
       console.log(err)
     }

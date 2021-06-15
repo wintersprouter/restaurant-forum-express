@@ -1,16 +1,16 @@
-<form action="/users/:{{userProfile.id}}?_method=PUT" method="POST" enctype="multipart/form-data">
+<form action="/users/:{{userId}}?_method=PUT" method="POST" enctype="multipart/form-data">
+{{> message}}
 <div class="form-group">
-  <label for="name">Name</label>
-  <input type="text" class="form-control" name="name" id="name" placeholder="Enter name" value="{{userProfile.name}}">
+  <label for="input-name">使用者名稱</label>
+  <input type="text" class="form-control" name="name" id="input-name" placeholder="Enter name" value="{{user.name}}"maxlength="20" autofocus required>
 </div>
 <div class="form-group">
-  <label for="email">Email</label>
-  <input type="text" class="form-control" name="email" id="email" placeholder="Enter email"
-    value="{{userProfile.email}}">
-</div>
-<div class="form-group">
-  <label for="image">Image</label>
-  <input type="file" class="form-control-file" id="image" name="image">
+  <label class="image btn btn-info">
+  <input type="file" class="form-control-file" id="upload_img" name="image" style="display:none;"  accept=".png,.jpg,.jpeg" value="{{user.image}}">
+  <i class="far fa-image"></i> 上傳圖片
+  </label>
+  <small style="color: crimson;">* 圖片檔案格式僅接受.png .jpg .jpeg 且不得超過 1MB  </small>
 </div>
   <button type="submit" class="btn btn-primary">Submit</button>
+  <br />
 </form>

@@ -4,7 +4,21 @@ const userController = require('../controllers/userController.js')
 const categoryController = require('../controllers/categoryController.js')
 const commentController = require('../controllers/commentController.js')
 const multer = require('multer')
-const upload = multer({ dest: 'temp/' })
+
+const upload = multer({
+  dest: 'temp/',
+  fileFilter: (req, file, cb) => {
+    if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
+      cb(null, false, req.flash('error_messages', '請上傳正確圖片格式！'))
+    }
+    cb(null, true)
+  },
+  limits: {
+    fileSize: 1000000,
+    files: 1
+  }
+})
+
 const helpers = require('../_helpers')
 
 module.exports = (app, passport) => {
@@ -32,6 +46,7 @@ module.exports = (app, passport) => {
   app.get('/users/top', authenticated, userController.getTopUser)
   app.get('/users/:id', authenticated, userController.getUser)
   app.get('/users/:id/edit', authenticated, userController.getEditUser)
+  app.put('/users/:id', authenticated, upload.single('image'), userController.putUser)
 
   app.post('/favorite/:restaurantId', authenticated, userController.addFavorite)
   app.delete('/favorite/:restaurantId', authenticated, userController.removeFavorite)

@@ -1,0 +1,9 @@
+.row {
+  height: 100%;
+}
+.user-image {
+  object-fit: cover;
+}
+h2 > .user-name {
+  font-size: 3rem;
+}

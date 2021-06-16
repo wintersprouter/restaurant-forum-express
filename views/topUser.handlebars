@@ -1,3 +1,6 @@
+<header>
+  <link rel="stylesheet" href="/stylesheets/topUser.css">
+</header>
 <ul class="nav nav-tabs">
   <li class="nav-item">
     <a class="nav-link" href="/restaurants">首頁</a>
@@ -14,21 +17,22 @@
 <hr />
 <div class="row" style="text-align: center;">
   {{#each users}}
-  <div class="col-3">
+  <div class="col-md-3 col-sm-5">
     <a href="/users/{{this.id}}">
-      <img class="" src="{{this.image}}" width="140px" height="140px">
+      <img class="user-image mt-5" {{#ifCond this.image ' '}} {{else}}style="width: 200px; height: 200px"src={{this.image}}{{/ifCond}}
+    alt="user-image">
     </a>
-    <h2>{{this.name}}</h2>
-    <span class="badge badge-secondary">追蹤人數：{{this.FollowerCount}}</span>
-    <p>
+    <h2 class="user-name mt-3">{{this.name}}</h2>
+    <h5><span class="follower-count badge badge-secondary my-3 p-2">追蹤人數：{{this.FollowerCount}}</span></h5>
+    <p class="follow-ship">
       {{#ifCond this.id ../user.id}}
       {{else}}
       {{#if this.isFollowed }}
     <form action="/following/{{this.id}}?_method=DELETE" method="POST" style="display: contents;"><button type="submit"
-        class="btn btn-danger">取消追蹤</button></form>
+        class="btn btn-danger mb-3">取消追蹤</button></form>
       {{else}}
     <form action="/following/{{this.id}}" method="POST" style="display: contents;"><button type="submit"
-        class="btn btn-primary">追蹤</button></form>
+        class="btn btn-primary mb-3">追蹤</button></form>
       {{/if}}
       {{/ifCond}}
     </p>

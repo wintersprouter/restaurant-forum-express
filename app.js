@@ -34,6 +34,7 @@ app.use((req, res, next) => {
   res.locals.user = helpers.getUser(req)
   next()
 })
+app.use(express.static('public'))
 
 app.use(methodOverride('_method'))
 

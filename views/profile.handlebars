@@ -1,15 +1,17 @@
 <header>
   <link rel="stylesheet" href="/stylesheets/profile.css">
 </header>
-<section class="user-profile">
-  <div class="user-avatar"><img class="mt-2" {{#if user.image}}src={{user.image}}{{/if}}
-    style="background: #C4C4C4;  width: 150px; height: 150px">
-  <div class="user-info">
+<div class="user-profile row d-flex">
+  <div class="user-avatar col-md-5 p-0">
+  <img class="user-avatar-img " {{#if user.image}}src={{user.image}}{{else}}
+    style="background: #C4C4C4;"{{/if}}>
+    </div>
+  <div class="user-info col-md-7 mt-2 pl-5 pt-3">
     <h1 class="user-name">{{user.name}}</h1>
-    <p class="email">{{user.email}}</p>
+    <p class="email mt-2">{{user.email}}</p>
     {{#ifCond userId user.id}}
     <form action="/users/{{user.id}}/edit" method="GET" style="display: contents;"><button type="submit"
-        class="btn btn-primary">Edit</button></form>
+        class="mt-5 btn btn-primary">Edit</button></form>
     {{/ifCond}}
   </div>
-</section>
+</div>

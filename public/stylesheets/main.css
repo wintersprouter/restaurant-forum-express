@@ -31,7 +31,9 @@ li {
 a {
   text-decoration: none;
 }
-
+.album {
+  height: 100%;
+}
 .container {
   width: 85%;
   margin: 0 auto 3rem auto;

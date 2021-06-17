@@ -91,12 +91,48 @@ const userController = {
     try {
       const userId = helpers.getUser(req).id
       const id = req.params.id
-      const userProfile = await User.findByPk(id)
-      const user = userProfile.toJSON()
+      const profileUser =  (await User.findOne({
+          include: [
+            {
+              model: User,
+              as: 'Followers',
+              attributes: ['id', 'image']
+            },
+            { model: User,
+              as: 'Followings', 
+              attributes: ['id', 'image'] 
+            },
+            {
+              model: Restaurant,
+              as: 'FavoritedRestaurants',
+              attributes: ['id', 'image']
+            },
+            {
+              model: Comment,
+              include: [{ 
+                model: Restaurant, attributes: ['id', 'image'] 
+              }]
+            }
+          ],
+          where: {
+            id: id 
+          },
+          attributes: ['id', 'name', 'email', 'image']
+        })
+      ).toJSON()
+
+      profileUser.isFollowed = helpers.getUser(req).Followings.map(d => d.id).includes(profileUser.id)
+      const commentRestaurant = []
+      profileUser.Comments.forEach( comment => {
+          commentRestaurant.push(comment.Restaurant)
+      })
+
+      const filteredCommentRestaurant = [...new Set(commentRestaurant.map(item => JSON.stringify(item)))].map(item => JSON.parse(item))
 
       return res.render('profile', {
         userId,
-        user
+        profileUser,
+        filteredCommentRestaurant
       })
     } catch (err) {
       console.log(err)
@@ -107,7 +143,6 @@ const userController = {
       const userId = helpers.getUser(req).id
       const userProfile = await User.findByPk(userId)
       const user = userProfile.toJSON()
-      console.log(user)
       return res.render('editProfile', {
         userId,
         user
@@ -119,7 +154,6 @@ const userController = {
   putUser: async (req, res) => {
     const { name } = req.body
     const userId = helpers.getUser(req).id
-    const id = req.params.id
     const { file } = req
     let img
 

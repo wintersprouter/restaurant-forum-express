@@ -19,8 +19,8 @@
   {{#each users}}
   <div class="col-md-3 col-sm-5">
     <a href="/users/{{this.id}}">
-      <img class="user-image mt-5" {{#ifCond this.image ' '}} {{else}}style="width: 200px; height: 200px"src={{this.image}}{{/ifCond}}
-    alt="user-image">
+      <img class="user-image mt-5" {{#if this.image}}src={{this.image}}{{/if}} style=" background: #C4C4C4;  width: 200px; height: 200px;"
+    >
     </a>
     <h2 class="user-name mt-3">{{this.name}}</h2>
     <h5><span class="follower-count badge badge-secondary my-3 p-2">追蹤人數：{{this.FollowerCount}}</span></h5>

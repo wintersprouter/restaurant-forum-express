@@ -91,40 +91,41 @@ const userController = {
     try {
       const userId = helpers.getUser(req).id
       const id = req.params.id
-      const profileUser =  (await User.findOne({
-          include: [
-            {
-              model: User,
-              as: 'Followers',
-              attributes: ['id', 'image']
-            },
-            { model: User,
-              as: 'Followings', 
-              attributes: ['id', 'image'] 
-            },
-            {
-              model: Restaurant,
-              as: 'FavoritedRestaurants',
-              attributes: ['id', 'image']
-            },
-            {
-              model: Comment,
-              include: [{ 
-                model: Restaurant, attributes: ['id', 'image'] 
-              }]
-            }
-          ],
-          where: {
-            id: id 
+      const profileUser = (await User.findOne({
+        include: [
+          {
+            model: User,
+            as: 'Followers',
+            attributes: ['id', 'image']
           },
-          attributes: ['id', 'name', 'email', 'image']
-        })
+          {
+            model: User,
+            as: 'Followings',
+            attributes: ['id', 'image']
+          },
+          {
+            model: Restaurant,
+            as: 'FavoritedRestaurants',
+            attributes: ['id', 'image']
+          },
+          {
+            model: Comment,
+            include: [{
+              model: Restaurant, attributes: ['id', 'image']
+            }]
+          }
+        ],
+        where: {
+          id: id
+        },
+        attributes: ['id', 'name', 'email', 'image']
+      })
       ).toJSON()
 
       profileUser.isFollowed = helpers.getUser(req).Followings.map(d => d.id).includes(profileUser.id)
       const commentRestaurant = []
-      profileUser.Comments.forEach( comment => {
-          commentRestaurant.push(comment.Restaurant)
+      profileUser.Comments.forEach(comment => {
+        commentRestaurant.push(comment.Restaurant)
       })
 
       const filteredCommentRestaurant = [...new Set(commentRestaurant.map(item => JSON.stringify(item)))].map(item => JSON.parse(item))
@@ -177,25 +178,23 @@ const userController = {
       console.log(err)
     }
   },
-  getTopUser: (req, res) => {
-    // 撈出所有 User 與 followers 資料
-    return User.findAll({
-      include: [
-        { model: User, as: 'Followers' }
-      ]
-    }).then(users => {
-      // 整理 users 資料
+  getTopUser: async (req, res) => {
+    try {
+      let users = await User.findAll({
+        include: [
+          { model: User, as: 'Followers' }
+        ]
+      })
       users = users.map(user => ({
         ...user.dataValues,
-        // 計算追蹤者人數
         FollowerCount: user.Followers.length,
-        // 判斷目前登入使用者是否已追蹤該 User 物件
         isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
       }))
-      // 依追蹤者人數排序清單
       users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)
       return res.render('topUser', { users: users })
-    })
+    } catch (err) {
+      console.log(err)
+    }
   },
   addFollowing: async (req, res) => {
     try {

@@ -3,24 +3,37 @@ const Comment = db.Comment
 const helpers = require('../_helpers')
 
 const commentController = {
-  postComment: (req, res) => {
-    return Comment.create({
-      text: req.body.text,
-      RestaurantId: req.body.restaurantId,
-      UserId: helpers.getUser(req).id
-    })
-      .then((comment) => {
-        res.redirect(`/restaurants/${req.body.restaurantId}`)
+  postComment: async (req, res) => {
+    const { text, restaurantId } = req.body
+    if (!text) {
+      req.flash('error_messages', '請填寫評論內容！')
+      return res.redirect('back')
+    }
+    if (text.length > 150) {
+      req.flash('error_messages', '評論字數不可超過150字')
+      return res.redirect('back')
+    }
+    try {
+      await Comment.create({
+        text,
+        RestaurantId: restaurantId,
+        UserId: helpers.getUser(req).id
       })
+      res.redirect(`/restaurants/${restaurantId}`)
+    } catch (err) {
+      console.log(err)
+    }
   },
-  deleteComment: (req, res) => {
-    return Comment.findByPk(req.params.id)
-      .then((comment) => {
-        comment.destroy()
-          .then((comment) => {
-            res.redirect(`/restaurants/${comment.RestaurantId}`)
-          })
-      })
+  deleteComment: async (req, res) => {
+    const id = req.params.id
+    try {
+      const comment = await Comment.findByPk(id)
+      comment.destroy()
+      req.flash('success_messages', '評論刪除成功')
+      res.redirect(`/restaurants/${comment.RestaurantId}`)
+    } catch (err) {
+      console.log(err)
+    }
   }
 }
 

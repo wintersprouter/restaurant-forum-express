@@ -1,22 +1,22 @@
 const db = require('../models')
 const { Restaurant, Category, Comment, User } = db
 const helpers = require('../_helpers')
-const pageLimit = 10 // 每頁筆數
+const pageLimit = 10
 
 const restController = {
   getRestaurants: async (req, res) => {
-    try {
-      let offset = 0
-      const whereQuery = {}
-      let categoryId = ''
-      if (req.query.page) {
-        offset = (req.query.page - 1) * pageLimit
-      }
-      if (req.query.categoryId) {
-        categoryId = Number(req.query.categoryId)
-        whereQuery.CategoryId = categoryId
-      }
+    let offset = 0
+    const whereQuery = {}
+    let categoryId = ''
+    if (req.query.page) {
+      offset = (req.query.page - 1) * pageLimit
+    }
 
+    if (req.query.categoryId) {
+      categoryId = Number(req.query.categoryId)
+      whereQuery.CategoryId = categoryId
+    }
+    try {
       const [result, categories] = await Promise.all([Restaurant.findAndCountAll({
         include: Category,
         where: whereQuery,
@@ -24,9 +24,9 @@ const restController = {
         limit: pageLimit
       }), Category.findAll({ raw: true, nest: true })])
 
-      const page = Number(req.query.page) || 1 // 考慮無page參數的例外
-      const pages = Math.ceil(result.count / pageLimit)// 總計幾頁分頁//(計算餐廳總數/每頁筆數)無條件進位
-      const totalPage = Array.from({ length: pages }).map((item, index) => index + 1)// Array.from({length: pages})回傳長度符合的陣列[1,2,3,4,5...]//用 map 把真正的數字帶進去
+      const page = Number(req.query.page) || 1
+      const pages = Math.ceil(result.count / pageLimit)
+      const totalPage = Array.from({ length: pages }).map((item, index) => index + 1)
       const prev = page - 1 < 1 ? 1 : page - 1
       const next = page + 1 > pages ? pages : page + 1
 
@@ -39,55 +39,61 @@ const restController = {
 
       res.render('restaurants', {
         restaurants: data,
-        categories: categories,
-        categoryId: categoryId,
-        page: page,
-        totalPage: totalPage,
-        prev: prev,
-        next: next
+        categories,
+        categoryId,
+        page,
+        totalPage,
+        prev,
+        next
       })
     } catch (err) {
       console.log(err)
     }
   },
 
-  getRestaurant: (req, res) => {
-    return Restaurant.findByPk(req.params.id, {
-      include: [
-        Category,
-        { model: User, as: 'FavoritedUsers' },
-        { model: Comment, include: [User] }
-      ]
-    }).then(restaurant => {
+  getRestaurant: async (req, res) => {
+    const id = req.params.id
+    try {
+      const restaurant = await Restaurant.findByPk(id, {
+        include: [
+          Category,
+          { model: User, as: 'FavoritedUsers' },
+          { model: Comment, include: [User] }
+        ]
+      })
       const isFavorited = restaurant.FavoritedUsers.map(d => d.id).includes(helpers.getUser(req).id)
       return res.render('restaurant', {
         restaurant: restaurant.toJSON(),
         isFavorited: isFavorited
       })
-    })
+    } catch (err) {
+      console.log(err)
+    }
   },
-  getFeeds: (req, res) => {
-    return Promise.all([
-      Restaurant.findAll({
-        limit: 10,
-        raw: true,
-        nest: true,
-        order: [['createdAt', 'DESC']],
-        include: [Category]
-      }),
-      Comment.findAll({
-        limit: 10,
-        raw: true,
-        nest: true,
-        order: [['createdAt', 'DESC']],
-        include: [User, Restaurant]
-      })
-    ]).then(([restaurants, comments]) => {
-      return res.render('feeds', {
+  getFeeds: async (req, res) => {
+    try {
+      const [restaurants, comments] = await Promise.all([
+        Restaurant.findAll({
+          limit: 10,
+          raw: true,
+          nest: true,
+          order: [['createdAt', 'DESC']],
+          include: [Category]
+        }),
+        Comment.findAll({
+          limit: 10,
+          raw: true,
+          nest: true,
+          order: [['createdAt', 'DESC']],
+          include: [User, Restaurant]
+        })])
+      res.render('feeds', {
         restaurants: restaurants,
         comments: comments
       })
-    })
+    } catch (err) {
+      console.log(err)
+    }
   }
 }
 

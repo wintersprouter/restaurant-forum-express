@@ -1,3 +1,6 @@
+<header>
+  <link rel="stylesheet" href="/stylesheets/feeds.css">
+</header>
 <ul class="nav nav-tabs">
   <li class="nav-item">
     <a class="nav-link" href="/restaurants">首頁</a>
@@ -22,11 +25,11 @@
         {{#each restaurants}}
         <div>
           <h4>
-            <a href="/restaurants/{{this.id}}">{{this.name}}</a>
-            <small>{{this.Category.name}}</small>
+            <a href="/restaurants/{{this.id}}" style="text-decoration: none;"class="feeds-restaurant-name">{{this.name}}</a>
+            <small class="feeds-restaurant-category">{{this.Category.name}}</small>
           </h4>
-          <p>{{this.description}}</p>
-          {{moment this.createdAt}}
+          <p class="feeds-restaurant-description">{{this.description}}</p><p class="feeds-restaurant-createdAt text-right">
+          {{moment this.createdAt}}</p>
           <hr>
         </div>
         {{/each}}
@@ -42,11 +45,12 @@
         {{#each comments}}
         <div>
           <h4>
-            <a href="/restaurants/{{this.Restaurant.id}}">{{this.Restaurant.name}}</a>
+            <a href="/restaurants/{{this.Restaurant.id}}"style="text-decoration: none;"class="feeds-comment-restaurant-name">{{this.Restaurant.name}}</a>
           </h4>
-          <p>{{this.text}}</p>
-          by <a href="/users/{{this.User.id}}">{{this.User.name}}</a>
+          <p class="feeds-comment-text">{{this.text}}</p>
+          by <a href="/users/{{this.User.id}}"style="text-decoration: none;"class="feeds-comment-user">{{this.User.name}}</a> <p class="feeds-comment-createdAt text-right">
           at {{moment this.createdAt}}
+          </p>
           <hr>
         </div>
         {{/each}}

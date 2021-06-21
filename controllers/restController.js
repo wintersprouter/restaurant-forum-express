@@ -1,5 +1,5 @@
 const db = require('../models')
-const { Restaurant, Category, Comment, User } = db
+const { Restaurant, Category, Comment, User, Favorite } = db
 const helpers = require('../_helpers')
 const pageLimit = 10
 
@@ -91,6 +91,20 @@ const restController = {
         restaurants: restaurants,
         comments: comments
       })
+    } catch (err) {
+      console.log(err)
+    }
+  },
+  getDashboard: async (req, res) => {
+    try {
+      const id = req.params.id
+      const restaurant = (await Restaurant.findByPk(id, {
+        include: [
+          Category,
+          { model: Comment, include: [User] }
+        ]
+      })).toJSON()
+      return res.render('dashboard', { restaurant })
     } catch (err) {
       console.log(err)
     }

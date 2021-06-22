@@ -61,7 +61,6 @@ const restController = {
           { model: Comment, include: [User] }
         ]
       })
-      const totalFavoritedUsers = restaurant.FavoritedUsers.length
       const isFavorited = restaurant.FavoritedUsers.map(d => d.id).includes(helpers.getUser(req).id)
 
       if (!req.session.views[req.params.id]) {
@@ -70,8 +69,7 @@ const restController = {
 
       return res.render('restaurant', {
         restaurant: restaurant.toJSON(),
-        isFavorited: isFavorited,
-        totalFavoritedUsers
+        isFavorited: isFavorited
       })
     } catch (err) {
       console.log(err)
@@ -108,7 +106,8 @@ const restController = {
       const restaurant = (await Restaurant.findByPk(id, {
         include: [
           Category,
-          { model: Comment, include: [User] }
+          { model: Comment, include: [User] },
+          { model: User, as: 'FavoritedUsers' }
         ]
       })).toJSON()
       return res.render('dashboard', { restaurant })

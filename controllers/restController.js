@@ -62,6 +62,11 @@ const restController = {
         ]
       })
       const isFavorited = restaurant.FavoritedUsers.map(d => d.id).includes(helpers.getUser(req).id)
+
+      if (!req.session.views[req.params.id]) {
+        restaurant.increment('viewCounts')
+      }
+
       return res.render('restaurant', {
         restaurant: restaurant.toJSON(),
         isFavorited: isFavorited
@@ -91,6 +96,21 @@ const restController = {
         restaurants: restaurants,
         comments: comments
       })
+    } catch (err) {
+      console.log(err)
+    }
+  },
+  getDashboard: async (req, res) => {
+    try {
+      const id = req.params.id
+      const restaurant = (await Restaurant.findByPk(id, {
+        include: [
+          Category,
+          { model: Comment, include: [User] },
+          { model: User, as: 'FavoritedUsers' }
+        ]
+      })).toJSON()
+      return res.render('dashboard', { restaurant })
     } catch (err) {
       console.log(err)
     }

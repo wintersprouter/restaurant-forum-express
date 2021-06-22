@@ -1,0 +1,13 @@
+<div class="row">
+  <div class="col-md-12">
+    <h1>{{restaurant.name}}</h1>
+    <p class="mt-5"style="font-size: 1.5rem;">[{{restaurant.Category.name}}]</p>
+  </div>
+  </hr>
+  <div class="col-md-12 mb-5">
+    <li style="font-size: 1.5rem;">評論數：{{restaurant.Comments.length}}</li>
+    <li style="font-size: 1.5rem;">瀏覽次數：{{restaurant.viewCounts}}</li>
+    <li style="font-size: 1.5rem;">收藏數：{{restaurant.FavoritedUsers.length}}</li>
+  </div>
+</div>
+<a href="javascript:history.back()">回上一頁</a>

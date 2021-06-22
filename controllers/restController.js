@@ -64,7 +64,7 @@ const restController = {
       const isFavorited = restaurant.FavoritedUsers.map(d => d.id).includes(helpers.getUser(req).id)
 
       if (!req.session.views[req.params.id]) {
-        restaurant.increment('viewCount')
+        restaurant.increment('viewCounts')
       }
 
       return res.render('restaurant', {

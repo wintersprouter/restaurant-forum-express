@@ -38,7 +38,8 @@ const userController = {
           await User.create({
             name,
             email,
-            password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
+            password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null),
+            image: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
           })
           req.flash('success_messages', '成功註冊帳號！')
           return res.redirect('/signin')

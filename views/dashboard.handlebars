@@ -4,9 +4,10 @@
     <p class="mt-5"style="font-size: 1.5rem;">[{{restaurant.Category.name}}]</p>
   </div>
   </hr>
-  <div class="col-md-12 mt-5">
+  <div class="col-md-12 mb-5">
     <li style="font-size: 1.5rem;">評論數：{{restaurant.Comments.length}}</li>
-    <li style="font-size: 1.5rem;">瀏覽次數：</li>
-    <li style="font-size: 1.5rem;">收藏數：</li>
+    <li style="font-size: 1.5rem;">瀏覽次數：{{restaurant.viewCount}}</li>
+    <li style="font-size: 1.5rem;">收藏數：{{totalFavoritedUsers}}</li>
   </div>
 </div>
+<a href="javascript:history.back()" >回上一頁</a>

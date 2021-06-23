@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs')
 const db = require('../models')
-const { User, Favorite, Followship, Restaurant, Comment, Like} = db
+const { User, Favorite, Followship, Restaurant, Comment, Like } = db
 
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
@@ -235,7 +235,7 @@ const userController = {
       console.log(err)
     }
   },
-  removeLike:async (req, res) => {
+  removeLike: async (req, res) => {
     try {
       const like = await Like.findOne({
         where: {
@@ -248,7 +248,7 @@ const userController = {
     } catch (err) {
       console.log(err)
     }
-  },  
+  }
 
 }
 

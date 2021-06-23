@@ -1,7 +1,10 @@
+<header>
+  <link rel="stylesheet" href="/stylesheets/restaurant.css">
+</header>
 <div class="row">
   <div class="col-md-12">
     <h1>{{restaurant.name}}</h1>
-    <p>[{{restaurant.Category.name}}]</p>
+    <p class="my-2" style="font-size: 1.2rem;">[{{restaurant.Category.name}}]</p>
   </div>
   <div class="col-md-4">
     <img class="img-responsive center-block" src="{{restaurant.image}}" style="width: 250px;margin-bottom: 25px;">
@@ -13,28 +16,34 @@
       </ul>
     </div>
   </div>
-  <div class="col-md-8">
+  <div class="col-md-8 content">
     <p class="my-5">{{restaurant.description}}</p>
+  <div class="buttons">
     <a href="/restaurants/{{restaurant.id}}/dashboard"><button type="submit" class="btn btn-primary">Dashboard</button></form></a>
     {{#if isFavorited }}
-    <form action="/favorite/{{restaurant.id}}?_method=DELETE" method="POST" style="display: contents;"><button
-        type="submit" class="btn btn-danger">移除最愛</button></form>
+    <form action="/favorite/{{restaurant.id}}?_method=DELETE" method="POST" style="display: contents;"><button type="submit"
+        class="btn btn-info ">移除最愛<i class="fas fa-heart ml-2"></i></button></form>
     {{else}}
     <form action="/favorite/{{restaurant.id}}" method="POST" style="display: contents;"><button type="submit"
-        class="btn btn-primary">加到最愛</button></form>
+        class="btn btn-outline-info">加到最愛<i class="far fa-heart ml-2"></i></button>
+    </form>
     {{/if}}
     {{#if isLiked }}
     <form action="/like/{{restaurant.id}}?_method=DELETE" method="POST" style="display: contents;"><button type="submit"
-        class="btn btn-danger">Unlike<i class="fas fa-thumbs-up ml-2"></i></button></form>
+        class="btn btn-danger">Unlike<i class="fas fa-thumbs-up ml-2" style="color: #fff"></i></button></form>
     {{else}}
-    <form action="/like/{{restaurant.id}}" method="POST" style="display: contents;"><button type="submit" class="btn btn-primary">Like<i class="far fa-thumbs-up ml-2"></i></button></form>
+    <form action="/like/{{restaurant.id}}" method="POST" style="display: contents;"><button type="submit"
+        class="btn btn-outline-danger">Like<i class="far fa-thumbs-up ml-2"></i></button></form>
     {{/if}}
+    </div>
+    </div>
   </div>
   <hr>
-</div>
+
 <br />
 <br />
-<h3>所有評論：</h3>
+<div class="col-md-12">
+<h3 class="mb-4">所有評論：</h3>
 {{#each restaurant.Comments}}
 {{#if ../user.isAdmin}}
 <form action="/comments/{{this.id}}?_method=DELETE" method="POST" style="float: right;">
@@ -42,18 +51,22 @@
 </form>
 {{/if}}
 <blockquote class="blockquote mb-0">
-  <h4><a href="/users/{{this.User.id}}">{{this.User.name}}</a></h4>
-  <p>{{this.text}}</p>
+  <h4 class="mb-3"><a href="/users/{{this.User.id}}"style="text-decoration: none;" >{{this.User.name}}</a></h4>
+  <p class="mb-3">{{this.text}}</p>
   <footer class="blockquote-footer">{{moment this.createdAt}}</footer>
 </blockquote>
 <hr />
 {{/each}}
-<form action="/comments" method="POST">
+<form action="/comments" method="POST"class="mb-5">
   <div class="form-group">
     <label for="text">留下評論：</label>
+    <small>最多 150 字
+    </small>
     <textarea class="form-control" id="text" name="text" rows="3" maxlength="150" autofocus></textarea>
   </div>
   <input type="hidden" name="restaurantId" value="{{restaurant.id}}" />
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
-<a href="javascript:history.back()">回上一頁</a>
+<a href="javascript:history.back()" style="text-decoration: none;">回上一頁</a>
+</div>
+</div>

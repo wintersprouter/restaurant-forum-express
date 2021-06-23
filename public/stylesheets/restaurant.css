@@ -1,0 +1,17 @@
+.row {
+  height: 100%;
+}
+.content {
+  position: relative;
+}
+.buttons {
+  position: absolute;
+  left: 1rem;
+  bottom: 0rem;
+}
+.card-text {
+  margin-bottom: 1rem;
+}
+.fa-heart {
+  color: rgb(238, 106, 106);
+}

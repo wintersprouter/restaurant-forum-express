@@ -35,7 +35,7 @@ const restController = {
         description: r.dataValues.description.substring(0, 50),
         categoryName: r.dataValues.Category.name,
         isFavorited: helpers.getUser(req).FavoritedRestaurants.map(d => d.id).includes(r.id),
-        isLiked :helpers.getUser(req).LikedRestaurants.map(d => d.id).includes(r.id)
+        isLiked: helpers.getUser(req).LikedRestaurants.map(d => d.id).includes(r.id)
       }))
 
       res.render('restaurants', {

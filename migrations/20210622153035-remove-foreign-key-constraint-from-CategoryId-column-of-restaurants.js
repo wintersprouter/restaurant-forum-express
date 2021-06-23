@@ -20,4 +20,4 @@ module.exports = {
     }
     await queryInterface.addConstraint('Restaurants', options)
   }
-}  
+}

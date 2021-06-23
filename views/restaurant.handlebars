@@ -24,10 +24,10 @@
         class="btn btn-primary">加到最愛</button></form>
     {{/if}}
     {{#if isLiked }}
-    <form action="/like/{{restaurant.id}}?_method=DELETE" method="POST"><button type="submit"
-        class="btn btn-danger">UNLIKE</button></form>
+    <form action="/like/{{restaurant.id}}?_method=DELETE" method="POST" style="display: contents;"><button type="submit"
+        class="btn btn-danger">Unlike<i class="fas fa-thumbs-up ml-2"></i></button></form>
     {{else}}
-    <form action="/like/{{restaurant.id}}" method="POST"><button type="submit" class="btn btn-primary">LIKE</button></form>
+    <form action="/like/{{restaurant.id}}" method="POST" style="display: contents;"><button type="submit" class="btn btn-primary">Like<i class="far fa-thumbs-up ml-2"></i></button></form>
     {{/if}}
   </div>
   <hr>

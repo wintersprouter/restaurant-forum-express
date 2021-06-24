@@ -13,7 +13,7 @@
     <p class="email my-4">{{profileUser.email}}</p>
     <p class="comment-counts"><strong>{{filteredCommentRestaurant.length}}</strong> 已評論餐廳</p>
     <p class="favorite-counts"> <strong>{{profileUser.FavoritedRestaurants.length}}</strong> 收藏的餐廳</p>
-    <p class="folllowing-counts"> <strong>{{profileUser.Followings.length}}</strong> followings(追蹤者)</p>
+    <p class="following-counts"> <strong>{{profileUser.Followings.length}}</strong> followings(追蹤者)</p>
     <p class="followers-counts"><strong>{{profileUser.Followers.length}}</strong> followers(追隨者)</p>
     {{#ifCond userId profileUser.id}}
     <form action="/users/{{profileUser.id}}/edit" method="GET" style="display: contents;"><button type="submit"
@@ -32,18 +32,18 @@
   </div>
 </div>
 <div class="lists">
-<div class="folllowing-list">
-  <div class="list-title">{{profileUser.Followings.length}} folllowings(追蹤者)</div>
-  <div class="folllowing-avatars">
+<div class="following-list">
+  <div class="list-title">{{profileUser.Followings.length}} followings(追蹤者)</div>
+  <div class="following-avatars">
     {{#each profileUser.Followings}}
-    <a href="/users/{{this.id}}"style="text-decoration: none;">
+    <a href="/users/{{this.id}}"class="text-decoration-none">
       <img class="followings-image" {{#if this.image}}src={{this.image}}{{/if}} style=" background: #fff;  width: 162px; height: 162px;">
     </a>
     {{/each}}
   </div>
 </div>
 <div class="comment-list">
-  <div class="list-title"style="text-decoration: none;">{{filteredCommentRestaurant.length}} 已評論餐廳</div>
+  <div class="list-title text-decoration-none;">{{filteredCommentRestaurant.length}} 已評論餐廳</div>
   <div class="comment-restaurant">
     {{#each filteredCommentRestaurant}}
     <a href="/restaurants/{{this.id}}">
@@ -52,11 +52,11 @@
     {{/each}}
   </div>
 </div>
-<div class="folllower-list">
+<div class="follower-list">
   <div class="list-title">{{profileUser.Followers.length}} followers(追隨者)</div>
-  <div class="folllowing-avatars">
+  <div class="following-avatars">
     {{#each profileUser.Followers}}
-    <a href="/users/{{this.id}}"style="text-decoration: none;">
+    <a href="/users/{{this.id}}"class="text-decoration-none;">
       <img class="followings-image"{{#if this.image}}src={{this.image}}{{/if}} style="background: #C4C4C4;  width: 162px; height: 162px;"
       >
     </a>
@@ -68,7 +68,7 @@
   <div class="list-title">{{profileUser.FavoritedRestaurants.length}} 收藏的餐廳</div>
   <div class="favorite-restaurant">
     {{#each profileUser.FavoritedRestaurants}}
-    <a href="/restaurants/{{this.id}}"style="text-decoration: none;">
+    <a href="/restaurants/{{this.id}}"class="text-decoration-none;">
       <img class="favorite-restaurant-image  " {{#if this.image}}src={{this.image}}{{/if}} style=" background: #C4C4C4;  width: 162px; height: 162px;">
     </a>
     {{/each}}

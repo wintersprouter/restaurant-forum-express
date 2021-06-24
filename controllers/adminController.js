@@ -1,7 +1,6 @@
 const db = require('../models')
 const { Restaurant, User, Category } = db
 const imgur = require('imgur-node-api')
-const helpers = require('../_helpers')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
 const uploadImg = path => {

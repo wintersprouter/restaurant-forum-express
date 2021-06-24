@@ -29,7 +29,7 @@
 }
 .comment-counts,
 .favorite-counts,
-.folllowing-counts,
+.following-counts,
 .followers-counts {
   font-size: 1.25rem;
 }
@@ -44,9 +44,9 @@
   grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
   grid-gap: 1.5rem;
 }
-.folllowing-list,
+.following-list,
 .comment-list,
-.folllower-list,
+.follower-list,
 .favorite-list {
   border: rgb(201, 201, 201) 1px solid;
   margin-bottom: 20px;
@@ -58,9 +58,9 @@
   justify-self: start;
   padding: 5px 0 5px 15px;
 }
-.folllowing-avatars,
+.following-avatars,
 .comment-restaurant,
-.folllowing-avatars,
+.following-avatars,
 .favorite-restaurant {
   width: 100%;
   padding: 10px 4px 5px 10px;

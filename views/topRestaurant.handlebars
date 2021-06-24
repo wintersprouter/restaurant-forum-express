@@ -24,14 +24,14 @@
   <div class="top-restaurant">
       <img src="{{this.image}}" alt="top-restaurant-image"class="restaurant-image">
     <div class="top-restaurant-info ">
-      <a href="/restaurants/{{this.id}}" class="restaurant-name" style="text-decoration: none;">
+      <a href="/restaurants/{{this.id}}" class="restaurant-name text-decoration: none;">
         {{this.name}}
       </a>
       <h5 class="my-2"><span class="badge badge-secondary">收藏數：{{this.FavoritedCount}}</span></h5>
       <p class="card-text">{{this.description}}</p>
     
     <div class="buttons mt-5" >
-      <a href="/restaurants/{{this.id}}" class="restaurant-name" style="text-decoration: none;"><button type="submit" class="btn btn-primary show">Show</button></a>
+      <a href="/restaurants/{{this.id}}" class="restaurant-name text-decoration: none;"><button type="submit" class="btn btn-primary show">Show</button></a>
       {{#if this.isFavorited }}
       <form action="/favorite/{{this.id}}?_method=DELETE" method="POST" style="display: contents;"><button type="submit"
           class="btn btn-info">移除最愛<i class="fas fa-heart ml-2"></i></button></form>
@@ -43,6 +43,5 @@
     </div>
     </div>
   </div>
-
   {{/each}}
 </div>

@@ -28,7 +28,7 @@
         {{#each restaurants}}
         <div>
           <h4>
-            <a href="/restaurants/{{this.id}}" style="text-decoration: none;"class="feeds-restaurant-name">{{this.name}}</a>
+            <a href="/restaurants/{{this.id}}" class="feeds-restaurant-name text-decoration-none">{{this.name}}</a>
             <small class="feeds-restaurant-category">{{this.Category.name}}</small>
           </h4>
           <p class="feeds-restaurant-description">{{this.description}}</p><p class="feeds-restaurant-createdAt text-right">
@@ -48,10 +48,10 @@
         {{#each comments}}
         <div>
           <h4>
-            <a href="/restaurants/{{this.Restaurant.id}}"style="text-decoration: none;"class="feeds-comment-restaurant-name">{{this.Restaurant.name}}</a>
+            <a href="/restaurants/{{this.Restaurant.id}}"class="feeds-comment-restaurant-name text-decoration-none">{{this.Restaurant.name}}</a>
           </h4>
           <p class="feeds-comment-text">{{this.text}}</p>
-          by <a href="/users/{{this.User.id}}"style="text-decoration: none;"class="feeds-comment-user">{{this.User.name}}</a> <p class="feeds-comment-createdAt text-right">
+          by <a href="/users/{{this.User.id}}"class="feeds-comment-user text-decoration-none">{{this.User.name}}</a> <p class="feeds-comment-createdAt text-right">
           at {{moment this.createdAt}}
           </p>
           <hr>

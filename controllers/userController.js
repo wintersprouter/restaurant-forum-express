@@ -221,7 +221,7 @@ const userController = {
         }
       })
       followship.destroy()
-      req.flash('success_messages', `已取消追蹤`)
+      req.flash('success_messages', '已取消追蹤')
       return res.redirect('back')
     } catch (err) {
       console.log(err)

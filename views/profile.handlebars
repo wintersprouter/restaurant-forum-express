@@ -11,10 +11,10 @@
   <div class="user-info col-md-7 mt-2 pl-5 pt-3">
     <h1 class="user-name">{{profileUser.name}}</h1>
     <p class="email my-4">{{profileUser.email}}</p>
-    <p class="comment-counts">{{filteredCommentRestaurant.length}} 已評論餐廳</p>
-    <p class="favorite-counts"> {{profileUser.FavoritedRestaurants.length}} 收藏的餐廳</p>
-    <p class="folllowing-counts"> {{profileUser.Followings.length}} folllowings(追蹤者)</p>
-    <p class="followers-counts">{{profileUser.Followers.length}} followers(追隨者)</p>
+    <p class="comment-counts"><strong>{{filteredCommentRestaurant.length}}</strong> 已評論餐廳</p>
+    <p class="favorite-counts"> <strong>{{profileUser.FavoritedRestaurants.length}}</strong> 收藏的餐廳</p>
+    <p class="folllowing-counts"> <strong>{{profileUser.Followings.length}}</strong> followings(追蹤者)</p>
+    <p class="followers-counts"><strong>{{profileUser.Followers.length}}</strong> followers(追隨者)</p>
     {{#ifCond userId profileUser.id}}
     <form action="/users/{{profileUser.id}}/edit" method="GET" style="display: contents;"><button type="submit"
         class="my-5 btn btn-primary">Edit</button></form>

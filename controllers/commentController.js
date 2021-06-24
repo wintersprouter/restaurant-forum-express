@@ -19,6 +19,7 @@ const commentController = {
         RestaurantId: restaurantId,
         UserId: helpers.getUser(req).id
       })
+      req.flash('success_messages', '新增評論成功！')
       res.redirect(`/restaurants/${restaurantId}`)
     } catch (err) {
       console.log(err)

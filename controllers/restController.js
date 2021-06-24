@@ -66,7 +66,7 @@ const restController = {
       const isFavorited = restaurant.FavoritedUsers.map(d => d.id).includes(helpers.getUser(req).id)
       const isLiked = restaurant.LikedUsers.map(d => d.id).includes(helpers.getUser(req).id)
 
-      if (!req.session.views[req.params.id]) {
+      if (!req.session.views[id]) {
         restaurant.increment('viewCounts')
       }
 

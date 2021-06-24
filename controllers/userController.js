@@ -69,6 +69,7 @@ const userController = {
         UserId: helpers.getUser(req).id,
         RestaurantId: req.params.restaurantId
       })
+      req.flash('success_messages', '已將此餐廳加入收藏！')
       return res.redirect('back')
     } catch (err) {
       console.log(err)
@@ -83,6 +84,7 @@ const userController = {
         }
       })
       favorite.destroy()
+      req.flash('success_messages', '已將此餐廳移除收藏！')
       return res.redirect('back')
     } catch (err) {
       console.log(err)
@@ -203,6 +205,7 @@ const userController = {
         followerId: helpers.getUser(req).id,
         followingId: req.params.userId
       })
+      req.flash('success_messages', '成功追蹤！')
       return res.redirect('back')
     } catch (err) {
       console.log(err)
@@ -218,6 +221,7 @@ const userController = {
         }
       })
       followship.destroy()
+      req.flash('success_messages', `已取消追蹤`)
       return res.redirect('back')
     } catch (err) {
       console.log(err)

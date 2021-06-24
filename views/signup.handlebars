@@ -1,27 +1,43 @@
-<form class="form-signin" action="/signup" method="POST" style="width: 100%;">
-  <div class="text-center mb-4">
-    <h1 class="h3 mb-3 font-weight-normal">Sign Up</h1>
+<header>
+  <link rel="stylesheet" href="/stylesheets/sign.css">
+</header>
+
+<div class="row mb-5">
+  <div class="form-sign-up col-md-5 m-auto">
+    <div class="sign-up">
+      {{> message}}
+      <h2 class="text-center mt-3 mb-3">Sign Up</h2>
+      <form action="/signup" method="POST"class="form-sign-up">
+        <div class="form-group">
+          <label for="inputName">Name</label>
+          <i class="fas fa-user ml-1"></i>
+          <input type="text" id="name" name="name" class="form-control" placeholder="Enter Name" value="{{ name }}"
+            maxlength="15" autofocus>
+        </div>
+        <div class="form-group">
+        <label for="inputEmail">Email<i class="far fa-envelope ml-1"></i><small class="form-text">*為必填欄位</small></label>
+          <input type="email" id="email" name="email" class="form-control" placeholder="Enter Email"
+            value="{{ email }}"required>
+        </div>
+        <div class="form-group">
+          <label for="inputPassword">Password<i class="fas fa-lock ml-1"></i><small class="form-text">*為必填欄位</small></label>
+          <input type="password" id="password" name="password" class="form-control" placeholder="Enter Password"
+            value="{{ password }}"required>
+        </div>
+        <div class="form-group">
+          <label for="inputPasswordCheck">Password Check <i class="fas fa-check-double ml-1"></i><small
+              class="form-text">*為必填欄位</small></label>
+          <input type="password"  name="passwordCheck" class="form-control"
+            placeholder="Password Check">
+        </div>
+        <button type="submit" class="btn btn-outline-primary btn-block">Submit</button>
+      </form>
+      <p class="lead mt-4">
+        Have An Account？ <a href="/signin">Sign In</a>
+      </p>
+    </div>
   </div>
-  <div class="form-label-group">
-    <label for="inputName">Name</label>
-    <input type="text" name="name" class="form-control" placeholder="Name" required autofocus>
-  </div>
-  <div class="form-label-group">
-    <label for="inputEmail">Email</label>
-    <input type="email" name="email" class="form-control" placeholder="Email" required autofocus>
-  </div>
-  <div class="form-label-group">
-    <label for="inputPassword">Password</label>
-    <input type="password" name="password" class="form-control" placeholder="Password" required>
-  </div>
-  <div class="form-label-group">
-    <label for="inputPasswordCheck">Password Check</label>
-    <input type="password" name="passwordCheck" class="form-control" placeholder="Password Check" required>
-  </div>
-  <br />
-  <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
-  <div class="text-center mb-4">
-    <p><a href="/signin">Sign In</a></p>
-  </div>
-  <p class="mt-5 mb-3 text-muted text-center">© 2020-2021</p>
-</form>
+</div>
+<footer>
+<p class="mt-5 mb-3 text-muted">© 2020-2021</p>
+</footer>

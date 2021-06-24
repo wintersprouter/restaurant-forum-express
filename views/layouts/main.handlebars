@@ -25,7 +25,11 @@
         <a href="/admin" style="color: white;margin-right: 10px;">Admin 後台</a>
         {{/if}}
         {{#if user}}
+        {{#ifCond user.name ''}}
         <span style="color: white;margin-right: 10px;">Hi, {{user.email}}</span>
+        {{else}}
+          <span style="color: white;margin-right: 10px;">Hi, {{user.name}}</span>
+          {{/ifCond}}
         <a href="/users/{{user.id}}" style="color: white;margin-right: 10px;">Profile</a>
         <a href="/logout"><button class="btn btn-outline-success my-2 my-sm-0">LogOut</button></a>
         {{/if}}
@@ -33,20 +37,9 @@
     </div>
   </nav>
   <br />
-  <main role="main"class="bg-light">
+  <main role="main">
     <div class="album py-5">
       <div class="container">
-        {{#if success_messages}}
-        <div class="alert alert-success" role="alert" style="margin: 30px 0 ;">
-          {{success_messages}}
-        </div>
-        {{/if}}
-        {{#if error_messages}}
-        <div class="alert alert-danger" role="alert" style="margin: 30px 0 ;">
-          {{error_messages}}
-        </div>
-        {{/if}}
-
         {{{body}}}
       </div>
     </div>

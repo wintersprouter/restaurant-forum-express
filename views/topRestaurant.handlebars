@@ -1,7 +1,7 @@
 <header>
   <link rel="stylesheet" href="/stylesheets/topRestaurant.css">
 </header>
-<ul class="nav nav-tabs">
+<ul class="nav nav-tabs mt-5">
   <li class="nav-item">
     <a class="nav-link" href="/restaurants">首頁</a>
   </li>
@@ -19,6 +19,7 @@
 <h1>人氣餐廳</h1>
 <hr />
 <div class="restaurant-wrapper">
+      {{> message}}
   {{#each restaurants}}
   <div class="top-restaurant">
       <img src="{{this.image}}" alt="top-restaurant-image"class="restaurant-image">

@@ -1,0 +1,60 @@
+.restaurant-wrapper {
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+.top-restaurant {
+  position: relative;
+  background-color: #fff;
+  border-radius: 15px;
+  margin-bottom: 15px;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+}
+
+.restaurant-image {
+  border-radius: 15px 15px 0 0px;
+  width: 100%;
+}
+.top-restaurant-info {
+  margin: 1rem;
+}
+.restaurant-name {
+  font-size: 1.5rem;
+}
+.card-text {
+  margin-bottom: 1rem;
+}
+
+.restaurant-name {
+  font-size: 1.5rem;
+  color: #000080;
+}
+
+.fa-heart {
+  color: rgb(238, 106, 106);
+}
+.show {
+  margin-top: 0.3rem;
+}
+.top-restaurant-info {
+  position: relative;
+}
+
+@media screen and (min-width: 768px) {
+  .restaurant-image {
+    border-radius: 15px 0 0 15px;
+    object-fit: cover;
+    width: 300px;
+  }
+  .restaurant-wrapper {
+    width: 70%;
+  }
+  .top-restaurant {
+    display: flex;
+    justify-self: start;
+    text-align: start;
+  }
+}

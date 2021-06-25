@@ -10,6 +10,7 @@
   border: rgb(201, 201, 201) 1px solid;
   overflow: hidden;
   margin: 25px auto;
+  padding-bottom: 1rem;
 }
 .user-avatar {
   width: auto;
@@ -34,7 +35,7 @@
 .remove-follow-button,
 .follow-button {
   position: absolute;
-  bottom: 1rem;
+  bottom: 0rem;
   left: 3rem;
 }
 .comment-counts,
@@ -42,6 +43,9 @@
 .following-counts,
 .followers-counts {
   font-size: 1.25rem;
+}
+.followers-counts {
+  margin-bottom: 3rem;
 }
 .followings-image {
   object-fit: cover;
@@ -85,4 +89,9 @@
 .followings-image {
   margin-right: 6px;
   margin-bottom: 6px;
+}
+.comment-restaurant-image,
+.favorite-restaurant-image {
+  width: 75px;
+  height: 75px;
 }

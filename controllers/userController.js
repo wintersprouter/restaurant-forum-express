@@ -99,22 +99,22 @@ const userController = {
           {
             model: User,
             as: 'Followers',
-            attributes: ['id', 'image']
+            attributes: ['id', 'name', 'image']
           },
           {
             model: User,
             as: 'Followings',
-            attributes: ['id', 'image']
+            attributes: ['id', 'name', 'image']
           },
           {
             model: Restaurant,
             as: 'FavoritedRestaurants',
-            attributes: ['id', 'image']
+            attributes: ['id', 'name', 'image']
           },
           {
             model: Comment,
             include: [{
-              model: Restaurant, attributes: ['id', 'image']
+              model: Restaurant, attributes: ['id', 'name', 'image']
             }]
           }
         ],

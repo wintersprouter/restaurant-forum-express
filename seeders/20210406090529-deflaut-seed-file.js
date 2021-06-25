@@ -68,7 +68,7 @@ module.exports = {
           UserId: (i % 3) + 1,
           RestaurantId: i % 47 + 1,
           createdAt: new Date(new Date().getTime() - Math.floor(Math.floor(Math.random() * 600000000))),
-          updatedAt: new Date(new Date().getTime() - Math.floor(Math.floor(Math.random() * 864000))),
+          updatedAt: new Date(new Date().getTime() - Math.floor(Math.floor(Math.random() * 864000)))
         })
       ), {})
   },

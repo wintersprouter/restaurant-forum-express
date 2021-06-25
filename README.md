@@ -6,11 +6,11 @@
 
 [Heroku](https://mighty-springs-40479.herokuapp.com/)
 
-| email             | password |
-| ----------------- | -------- |
-| root@example.com  | 12345678 |
-| user1@example.com | 12345678 |
-| user2@example.com | 12345678 |
+| role  | email             | password |
+| ----- | ----------------- | -------- |
+| admin | root@example.com  | 12345678 |
+| admin | user1@example.com | 12345678 |
+| user  | user2@example.com | 12345678 |
 
 ## Features - 功能描述
 
@@ -35,6 +35,36 @@
 - 管理員可以修改餐廳類別名稱
 - 管理員可以刪除餐廳類別
 - 管理員可以修改使用者權限
+
+## Screen Photo - 專案畫面
+
+#### 前台
+
+![image](https://raw.githubusercontent.com/wintersprouter/restaurant-forum-express/master/public/images/front-homepage.png)
+首頁
+
+![image](https://raw.githubusercontent.com/wintersprouter/restaurant-forum-express/master/public/images/front-profile.png)
+個人頁面
+
+![image](https://raw.githubusercontent.com/wintersprouter/restaurant-forum-express/master/public/images/front-top-restaurants.png)
+人氣餐廳
+
+![image](https://raw.githubusercontent.com/wintersprouter/restaurant-forum-express/master/public/images/front-top-users.png)
+美食達人
+
+![image](https://raw.githubusercontent.com/wintersprouter/restaurant-forum-express/master/public/images/front-feeds.png)
+最新動態
+
+#### 後台
+
+![image](https://raw.githubusercontent.com/wintersprouter/restaurant-forum-express/master/public/images/back-restaurants.png)
+餐廳設定後台
+
+![image](https://raw.githubusercontent.com/wintersprouter/restaurant-forum-express/master/public/images/back-category.png)
+餐廳類別設定後台
+
+![image](https://raw.githubusercontent.com/wintersprouter/restaurant-forum-express/master/public/images/back-role.png)
+使用者權限設定後台
 
 ## Installing - 專案安裝流程
 

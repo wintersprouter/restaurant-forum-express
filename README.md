@@ -83,7 +83,7 @@ $ npx sequelize db:migrate
 4.新增種子資料
 
 ```
-輸入 npm run seed 指令
+$ npx sequelize db:seed:all
 ```
 
 5.啟動伺服器，執行 app.js 檔案

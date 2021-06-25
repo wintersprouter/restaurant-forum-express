@@ -1,12 +1,11 @@
 <header>
   <link rel="stylesheet" href="/stylesheets/profile.css">
 </header>
-<div class="container">
+<div class="container mt-5">
   {{> message}}
 <div class="user-profile row d-flex">
   <div class="user-avatar col-md-5 p-0">
   <img class="user-avatar-img" {{#if profileUser.image}}src={{profileUser.image}}{{/if}} style=" background: #fff;  width: 400px; height: 400px;">
-
   </div>
   <div class="user-info col-md-7 mt-2 pl-5 pt-3">
     <h1 class="user-name">{{profileUser.name}}</h1>

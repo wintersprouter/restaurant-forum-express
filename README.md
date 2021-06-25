@@ -54,6 +54,30 @@ cd restaurant-forum-express
 
 ```
 輸入 npm install 指令
+
+```
+
+4.設定 database
+
+```
+username: root
+password: password
+database: forum
+```
+
+5.Migrate
+
+```
+$ npx sequelize db:migrate
+```
+
+6.設定環境變數.env
+
+```
+1. add .env              <add file name .env>
+2. IMGUR_CLIENT_ID=XXX   <your imgur client id>
+3. SECRET=XXX            <set your secret string>
+
 ```
 
 4.新增種子資料

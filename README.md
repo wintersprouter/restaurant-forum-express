@@ -1,111 +1,92 @@
-# README
+# 餐廳評論網 restaurant-forum
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> heroku/master
-1. Fork
-2. git clone
-3. 更改專案名稱
+此專案為餐廳論壇網站，提供使用查詢、評論餐廳。
 
-## 初始化
+### Demo
 
-### Initialize
+[Heroku](https://mighty-springs-40479.herokuapp.com/)
 
-```
-git remote add upstream https://github.com/ALPHACamp/forum-express-grading.git  # 建立上游連線
-<<<<<<< HEAD
-=======
-## 初始化
-### Initialize
-```
-git clone https://github.com/your_github_name/forum-express-2020
-cd forum-express
-git remote add upstream https://github.com/ALPHACamp/forum-express-2020.git  # 建立上游連線
->>>>>>> origin/A19-test
-=======
->>>>>>> heroku/master
-npm install
-```
+| email             | password |
+| ----------------- | -------- |
+| root@example.com  | 12345678 |
+| user1@example.com | 12345678 |
+| user2@example.com | 12345678 |
 
-### 設定資料庫
+## Features - 功能描述
 
-需要與 config/config.json 一致
+#### 前台
 
-```
-create database forum;
-create database forum_test;
-```
-<<<<<<< HEAD
-=======
+- 使用者可以瀏覽餐廳資訊
+- 使用者可以依據餐廳類別查詢
+- 使用者可以註冊帳號、登入
+- 使用者可以留下對餐廳的評論
+- 使用者可以收藏餐廳
+- 使用者可以對餐廳點 Like
+- 使用者可以追蹤其他使用者
+- 使用者可以瀏覽餐廳最新消息
+- 使用者可以編輯帳號頭像與暱稱
 
->>>>>>> heroku/master
-<<<<<<< HEAD
+#### 後台
 
-### 切換環境
+- 管理員可以新增餐廳
+- 管理員這可以編輯餐廳介紹
+- 管理員可以刪除餐廳
+- 管理員可以新增餐廳類別
+- 管理員可以修改餐廳類別名稱
+- 管理員可以刪除餐廳類別
+- 管理員可以修改使用者權限
+
+## Installing - 專案安裝流程
+
+1.開啟終端機(Terminal)，Clone 此專案至本機電腦。
 
 ```
-export NODE_ENV=test   # 切換到測試環境，如果在等號後加其他的字串，則會切到其他的環境
-echo $NODE_ENV         # 印出目前使用的環境
+git clone https://github.com/wintersprouter/restaurant-forum-express
 ```
 
-```
-npm run test
-```
-
-## 下載作業規格
-
-以 A17 為例
+2.CD 進入存放此專案的資料夾
 
 ```
-git checkout -b A17           # 開新分支
-git merge origin/A17-test     # 下載作業規格
-npm run test                  # 直到綠燈全亮
-
-git add .
-git commit -m "...."
+cd restaurant-forum-express
 ```
 
-## 繳交作業
-
-=======
-
-### 切換環境
+3.安裝 npm 套件
 
 ```
-export NODE_ENV=test   # 切換到測試環境，如果在等號後加其他的字串，則會切到其他的環境
-echo $NODE_ENV         # 印出目前使用的環境
-```
-<<<<<<< HEAD
-
-### 執行測試
-```
-npm run test
+輸入 npm install 指令
 ```
 
-## 下載作業規格
-以 A17 為例
+4.新增種子資料
 
 ```
-git checkout -b A17           # 開新分支
-git merge origin/A17-test     # 下載作業規格
-npm run test                  # 直到綠燈全亮
-
-git add .
-git commit -m "...."
+輸入 npm run seed 指令
 ```
 
-## 繳交作業
+5.啟動伺服器，執行 app.js 檔案
 
->>>>>>> origin/A19-test
 ```
-git push origin A17           # 上傳本地進度
+輸入 npm run dev 指令
+於任一瀏覽器輸入 http://localhost:3000
 ```
 
-接著改成到 GitHub 來發 PR。
+## Environment SetUp - 環境建置
 
-## 共用帳號
-請一律設定一個共用的 root user
-root@example.com，登入密碼 12345678
-=======
->>>>>>> heroku/master
+- Visual Studio Code - 開發環境
+- Node.js - JavaScript 執行環境
+- mysql2: 2.2.5 - 資料庫
+- sequelize: 6.3.5
+- sequelize-cli: 6.2.0
+- Express: 4.17.1 - 應用程式架構
+- Express-Handlebars: 5.2.0 - 模板引擎
+- Express-session: 1.17.1
+- Body-parser: 1.19.0
+- Method-override: 3.0.0
+- Bcryptjs: 2.4.3
+- Connect-flash: 0.1.1 - 快閃訊息
+- Dotenv: 9.0.0 - 管理環境變數
+- Faker: 5.5.3
+- Passport: 0.4.1 - 使用者認證
+- Passport-local: 1.0.0 - 使用者本地登入驗證
+- imgur-node-api: 0.1.0
+- moment: 2.29.1
+- multer: 1.4.2

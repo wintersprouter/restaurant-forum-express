@@ -16,18 +16,15 @@
     <p class="following-counts"> <strong>{{profileUser.Followings.length}}</strong> followings(追蹤者)</p>
     <p class="followers-counts"><strong>{{profileUser.Followers.length}}</strong> followers(追隨者)</p>
     {{#ifCond userId profileUser.id}}
-    <form action="/users/{{profileUser.id}}/edit" method="GET" style="display: contents;"><button type="submit"
-        class="my-5 btn btn-primary">Edit</button></form>
+    <form action="/users/{{profileUser.id}}/edit" method="GET" style="display: contents;"><button type="submit"class="btn btn-primary edit-button">Edit</button></form>
       {{else}}
-
       {{#if profileUser.isFollowed }}
       <form action="/following/{{profileUser.id}}?_method=DELETE" method="POST" style="display: contents;"><button type="submit"
-          class="btn btn-danger my-5">取消追蹤</button></form>
+          class="btn btn-danger remove-follow-button">取消追蹤</button></form>
       {{else}}
       <form action="/following/{{profileUser.id}}" method="POST" style="display: contents;"><button type="submit"
-          class="btn btn-primary my-5">追蹤</button></form>
+          class="btn btn-primary follow-button">追蹤</button></form>
       {{/if}}
-
     {{/ifCond}}
   </div>
 </div>
@@ -73,6 +70,4 @@
     </a>
     {{/each}}
   </div>
-</div>
-</div>
 </div>

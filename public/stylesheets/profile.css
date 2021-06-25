@@ -27,6 +27,16 @@
 .email {
   font-size: 1.2rem;
 }
+.user-info {
+  position: relative;
+}
+.edit-button,
+.remove-follow-button,
+.follow-button {
+  position: absolute;
+  bottom: 1rem;
+  left: 3rem;
+}
 .comment-counts,
 .favorite-counts,
 .following-counts,

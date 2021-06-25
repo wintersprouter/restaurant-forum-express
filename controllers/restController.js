@@ -1,7 +1,7 @@
 const db = require('../models')
 const { Restaurant, Category, Comment, User } = db
 const helpers = require('../_helpers')
-const pageLimit = 10
+const pageLimit = 9
 
 const restController = {
   getRestaurants: async (req, res) => {

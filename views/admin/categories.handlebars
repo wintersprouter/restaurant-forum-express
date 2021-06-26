@@ -19,7 +19,7 @@
   {{else}}
   <form action="/admin/categories" method="POST">
     <input type="text" placeholder="name" name="name">
-    <button type="submit">Submit</button>
+    <button type="submit" class="btn btn-danger">Submit</button>
   </form>
   {{/if}}
 </div>
@@ -45,7 +45,7 @@
           </a>
         </button>
         <form action="/admin/categories/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
-          <button type="submit" class="btn btn-link">Delete</button>
+          <button type="submit" class="btn btn-link" style="color:#bd2333 ;">Delete</button>
         </form>
       </td>
     </tr>

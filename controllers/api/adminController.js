@@ -1,19 +1,10 @@
-const db = require('../../models')
-const { Restaurant, Category } = db
+const adminService = require('../../services/adminService.js')
 
 const adminController = {
-  getRestaurants: async (req, res) => {
-    try {
-      const restaurants = await Restaurant.findAll({
-        raw: true,
-        nest: true,
-        include: [Category],
-        order: [['updatedAt', 'DESC']]
-      })
-      return res.json({ restaurants })
-    } catch (err) {
-      console.log(err)
-    }
+  getRestaurants: (req, res) => {
+    adminService.getRestaurants(req, res, (data) => {
+      return res.json(data)
+    })
   }
 }
 module.exports = adminController

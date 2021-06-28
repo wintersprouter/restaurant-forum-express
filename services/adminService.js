@@ -61,7 +61,7 @@ const adminService = {
         })
     }
   },
-  putRestaurant: (req, res, callback)=> {
+  putRestaurant: (req, res, callback) => {
     const { name, tel, address, opening_hours, description, categoryId } = req.body
     const { file } = req
     const id = req.params.id
@@ -75,23 +75,22 @@ const adminService = {
       imgur.setClientID(IMGUR_CLIENT_ID)
       imgur.upload(file.path, (err, img) => {
         return Restaurant.findByPk(id)
-        .then(restaurant=>{
-          restaurant.update({
-          name,
-          tel,
-          address,
-          opening_hours,
-          description,
-          image: file ? img.data.link : restaurant.image,
-          CategoryId: categoryId,
-          updatedAt: new Date()
-        }).then((restaurant) => {
-          callback({ status: 'success', message: 'restaurant was successfully update' })
-        })
-        })
-        
+          .then(restaurant => {
+            restaurant.update({
+              name,
+              tel,
+              address,
+              opening_hours,
+              description,
+              image: file ? img.data.link : restaurant.image,
+              CategoryId: categoryId,
+              updatedAt: new Date()
+            }).then((restaurant) => {
+              callback({ status: 'success', message: 'restaurant was successfully update' })
+            })
+          })
       })
-} else {
+    } else {
       return Restaurant.findByPk(id)
         .then((restaurant) => {
           restaurant.update({
@@ -101,7 +100,7 @@ const adminService = {
             opening_hours,
             description,
             image: restaurant.image,
-            CategoryId:categoryId
+            CategoryId: categoryId
           }).then((restaurant) => {
             callback({ status: 'success', message: 'restaurant was successfully to update' })
           })

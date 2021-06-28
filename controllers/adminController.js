@@ -54,11 +54,11 @@ const adminController = {
 
   putRestaurant: (req, res) => {
     adminService.putRestaurant(req, res, (data) => {
-      if (data['status'] === 'error') {
-        req.flash('error_messages', data['message'])
+      if (data.status === 'error') {
+        req.flash('error_messages', data.message)
         return res.redirect('back')
       }
-      req.flash('success_messages', data['message'])
+      req.flash('success_messages', data.message)
       res.redirect('/admin/restaurants')
     })
   },

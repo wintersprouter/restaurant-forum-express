@@ -52,41 +52,15 @@ const adminController = {
     }
   },
 
-  putRestaurant: async (req, res) => {
-    const { name, tel, address, opening_hours, description, categoryId } = req.body
-    const { file } = req
-    const id = req.params.id
-    let img
-    if (!name) {
-      req.flash('error_messages', '請輸入餐廳名稱')
-      return res.redirect('back')
-    }
-    if (name.length > 30) {
-      req.flash('error_messages', '餐廳名稱不得超過30字')
-      return res.redirect('back')
-    }
-
-    try {
-      if (file) {
-        imgur.setClientID(IMGUR_CLIENT_ID)
-        img = await uploadImg(file.path)
+  putRestaurant: (req, res) => {
+    adminService.putRestaurant(req, res, (data) => {
+      if (data['status'] === 'error') {
+        req.flash('error_messages', data['message'])
+        return res.redirect('back')
       }
-      const restaurant = await Restaurant.findByPk(id)
-      await restaurant.update({
-        name,
-        tel,
-        address,
-        opening_hours,
-        description,
-        image: file ? img.data.link : restaurant.image,
-        CategoryId: categoryId,
-        updatedAt: new Date()
-      })
-      req.flash('success_messages', '成功更新餐廳資料')
+      req.flash('success_messages', data['message'])
       res.redirect('/admin/restaurants')
-    } catch (err) {
-      console.log(err)
-    }
+    })
   },
   deleteRestaurant: (req, res) => {
     adminService.deleteRestaurant(req, res, (data) => {

@@ -25,7 +25,7 @@ const adminService = {
   postRestaurant: (req, res, callback) => {
     const { name, tel, address, opening_hours, description, categoryId } = req.body
     const { file } = req
-    let img
+
     if (!name) {
       return callback({ status: 'error', message: '請輸入餐廳名稱' })
     }
@@ -58,6 +58,53 @@ const adminService = {
       })
         .then((restaurant) => {
           callback({ status: 'success', message: 'restaurant was successfully created' })
+        })
+    }
+  },
+  putRestaurant: (req, res, callback)=> {
+    const { name, tel, address, opening_hours, description, categoryId } = req.body
+    const { file } = req
+    const id = req.params.id
+    if (!name) {
+      return callback({ status: 'error', message: '請輸入餐廳名稱' })
+    }
+    if (name.length > 30) {
+      return callback({ status: 'error', message: '餐廳名稱不得超過30字' })
+    }
+    if (file) {
+      imgur.setClientID(IMGUR_CLIENT_ID)
+      imgur.upload(file.path, (err, img) => {
+        return Restaurant.findByPk(id)
+        .then(restaurant=>{
+          restaurant.update({
+          name,
+          tel,
+          address,
+          opening_hours,
+          description,
+          image: file ? img.data.link : restaurant.image,
+          CategoryId: categoryId,
+          updatedAt: new Date()
+        }).then((restaurant) => {
+          callback({ status: 'success', message: 'restaurant was successfully update' })
+        })
+        })
+        
+      })
+} else {
+      return Restaurant.findByPk(id)
+        .then((restaurant) => {
+          restaurant.update({
+            name,
+            tel,
+            address,
+            opening_hours,
+            description,
+            image: restaurant.image,
+            CategoryId:categoryId
+          }).then((restaurant) => {
+            callback({ status: 'success', message: 'restaurant was successfully to update' })
+          })
         })
     }
   },

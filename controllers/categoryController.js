@@ -4,25 +4,19 @@ const categoryService = require('../services/categoryService')
 
 const categoryController = {
   getCategories: (req, res) => {
-    const id = req.params.id
     categoryService.getCategories(req, res, (data) => {
       return res.render('admin/categories', data)
     })
   },
-  postCategory: async (req, res) => {
-    const { name } = req.body
-    if (!name) {
-      req.flash('error_messages', '請填寫名稱')
-      return res.redirect('back')
-    } else {
-      try {
-        await Category.create({ name })
-        req.flash('success_messages', '新增類別成功！')
-        res.redirect('/admin/categories')
-      } catch (err) {
-        console.log(err)
+  postCategory: (req, res) => {
+    categoryService.postCategory(req, res, (data) => {
+      if (data.status === 'error') {
+        req.flash('error_messages', data.message)
+        return res.redirect('back')
       }
-    }
+      req.flash('success_messages', data.message)
+      res.redirect('/admin/categories')
+    })
   },
   putCategory: async (req, res) => {
     const { name } = req.body

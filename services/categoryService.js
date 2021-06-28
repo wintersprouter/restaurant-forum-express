@@ -14,6 +14,19 @@ const categoryService = {
           return callback({ categories })
         }
       })
+  },
+  postCategory: (req, res, callback) => {
+    const { name } = req.body
+    if (!name) {
+      return callback({ status: 'error', message: '請輸入類別名稱' })
+    } else {
+      return Category.create({
+        name: name
+      })
+        .then((category) => {
+          callback({ status: 'success', message: 'category was successfully created' })
+        })
+    }
   }
 }
 module.exports = categoryService

@@ -27,6 +27,20 @@ const categoryService = {
           callback({ status: 'success', message: 'category was successfully created' })
         })
     }
+  },
+  putCategory: (req, res, callback) => {
+    const { name } = req.body
+    const id = req.params.id
+    if (!name) {
+      return callback({ status: 'error', message: '請輸入類別名稱' })
+    } else {
+      Category.findByPk(id).then(
+        (category) => {
+          category.update(name)
+        }).then((category) => {
+        callback({ status: 'success', message: 'category was successfully update' })
+      })
+    }
   }
 }
 module.exports = categoryService

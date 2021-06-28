@@ -122,16 +122,12 @@ const adminController = {
       console.log(err)
     }
   },
-  deleteRestaurant: async (req, res) => {
-    try {
-      const id = req.params.id
-      const restaurant = await Restaurant.findByPk(id)
-      restaurant.destroy()
-      req.flash('success_messages', '成功刪除餐廳')
-      res.redirect('/admin/restaurants')
-    } catch (err) {
-      console.log(err)
-    }
+  deleteRestaurant: (req, res) => {
+    adminService.deleteRestaurant(req, res, (data) => {
+      if (data.status === 'success') {
+        return res.redirect('/admin/restaurants')
+      }
+    })
   },
   getUsers: async (req, res) => {
     try {

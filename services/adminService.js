@@ -18,6 +18,16 @@ const adminService = {
       { include: [Category] }).then(restaurant => {
       return callback({ restaurant: restaurant.toJSON() })
     })
+  },
+  deleteRestaurant: (req, res, callback) => {
+    const id = req.params.id
+    return Restaurant.findByPk(id)
+      .then((restaurant) => {
+        restaurant.destroy()
+          .then((restaurant) => {
+            callback({ status: 'success', message: '' })
+          })
+      })
   }
 }
 

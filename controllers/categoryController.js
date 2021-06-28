@@ -28,16 +28,12 @@ const categoryController = {
       res.redirect('/admin/categories')
     })
   },
-  deleteCategory: async (req, res) => {
-    const id = req.params.id
-    try {
-      const category = await Category.findByPk(id)
-      category.destroy()
-      req.flash('success_messages', '刪除類別成功！')
+  deleteCategory: (req, res) => {
+    categoryService.deleteCategory(req, res, (data) => {
+      req.flash('success_messages', data.message)
       res.redirect('/admin/categories')
-    } catch (err) {
-      console.log(err)
-    }
+    })
   }
 }
+
 module.exports = categoryController

@@ -4,17 +4,6 @@ const adminService = require('../services/adminService')
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
-const uploadImg = path => {
-  return new Promise((resolve, reject) => {
-    imgur.upload(path, (err, img) => {
-      if (err) {
-        return reject('error happened')
-      }
-      resolve(img)
-    })
-  })
-}
-
 const adminController = {
   getRestaurants: (req, res) => {
     adminService.getRestaurants(req, res, (data) => {
@@ -31,38 +20,15 @@ const adminController = {
     }
   },
 
-  postRestaurant: async (req, res) => {
-    const { name, tel, address, opening_hours, description, categoryId } = req.body
-    const { file } = req
-    let img
-    if (!name) {
-      req.flash('error_messages', '請輸入餐廳名稱')
-      return res.redirect('back')
-    }
-    if (name.length > 30) {
-      req.flash('error_messages', '餐廳名稱不得超過30字')
-      return res.redirect('back')
-    }
-
-    try {
-      if (file) {
-        imgur.setClientID(IMGUR_CLIENT_ID)
-        img = await uploadImg(file.path)
+  postRestaurant: (req, res) => {
+    adminService.postRestaurant(req, res, (data) => {
+      if (data.status === 'error') {
+        req.flash('error_messages', data.message)
+        return res.redirect('back')
       }
-      await Restaurant.create({
-        name,
-        tel,
-        address,
-        opening_hours,
-        description,
-        image: file ? img.data.link : null,
-        CategoryId: categoryId
-      })
-      req.flash('success_messages', '成功新增一筆餐廳')
-      return res.redirect('/admin/restaurants')
-    } catch (err) {
-      console.log(err)
-    }
+      req.flash('success_messages', data.message)
+      res.redirect('/admin/restaurants')
+    })
   },
 
   getRestaurant: (req, res) => {

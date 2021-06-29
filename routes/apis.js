@@ -33,6 +33,7 @@ const authenticatedAdmin = (req, res, next) => {
 }
 // JWT signin
 router.post('/signin', userController.signIn)
+router.post('/signup', userController.signUp)
 
 router.get('/admin/restaurants', authenticated, authenticatedAdmin, adminController.getRestaurants)
 router.get('/admin/restaurant/:id', authenticated, authenticatedAdmin, adminController.getRestaurant)

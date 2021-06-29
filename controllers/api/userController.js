@@ -8,7 +8,30 @@ const passportJWT = require('passport-jwt')
 const ExtractJwt = passportJWT.ExtractJwt
 const JwtStrategy = passportJWT.Strategy
 
-let userController = {
+const userController = {
+  signUp: async (req, res) => {
+    try {
+      const { passwordCheck, password, email, name } = req.body
+      if (passwordCheck !== password) {
+        return res.json({ status: 'error', message: '兩次密碼輸入不同！' })
+      } else {
+        const user = await User.findOne({ where: { email } })
+        if (user) {
+          return res.json({ status: 'error', message: '信箱重複！' })
+        } else {
+          await User.create({
+            name,
+            email,
+            password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null),
+            image: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
+          })
+          return res.json({ status: 'success', message: '成功註冊帳號！' })
+        }
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  },
   signIn: (req, res) => {
     // 檢查必要資料
     if (!req.body.email || !req.body.password) {
